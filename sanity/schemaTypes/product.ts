@@ -11,9 +11,7 @@ const specField = defineField({
         { name: "label", title: "Label", type: "string" },
         { name: "value", title: "Value", type: "string" },
       ],
-      preview: {
-        select: { title: "label", subtitle: "value" }
-      }
+      preview: { select: { title: "label", subtitle: "value" } }
     }
   ]
 });
@@ -54,8 +52,13 @@ export default defineType({
     defineField({ name: "gallery", title: "Gallery", type: "array", of: [{ type: "image", options: { hotspot: true } }] }),
     featureField,
     specField,
+
+    // NEW: dedicated brochure file
+    defineField({ name: "brochure", title: "Brochure (PDF)", type: "file" }),
+
     downloadsField,
-    // Future e‑commerce fields (hidden unless sellable)
+
+    // Future e-commerce fields
     defineField({ name: "sellable", title: "Sellable", type: "boolean", initialValue: false }),
     defineField({ name: "sku", title: "SKU", type: "string", hidden: ({document}) => !document?.sellable }),
     defineField({ name: "price", title: "Price", type: "number", hidden: ({document}) => !document?.sellable }),
