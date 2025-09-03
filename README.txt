@@ -1,1 +1,0 @@
-LaPurity Water Tech full project. Run pnpm install then pnpm dev.

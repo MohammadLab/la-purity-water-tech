@@ -1,8 +1,26 @@
+# dependencies
 /node_modules
-/.next
-/out
+/.pnp
+.pnp.js
+
+# next.js
+/.next/
+/out/
+
+# production
 /build
-/.vercel
-.env
-.env.*
+
+# misc
 .DS_Store
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# local env files
+.env*
+!.env.example
+
+# vercel
+.vercel
