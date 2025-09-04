@@ -1,0 +1,12 @@
+{
+  "default": "Discover how {{title}} improves everyday water quality at home or work. Built for reliability and simple upkeep, it delivers consistent performance without complicated maintenance.",
+  "water-softeners": "{{title}} eliminates hard water minerals to prevent scale, protect plumbing and appliances, and leave dishes, skin, and laundry noticeably cleaner. Enjoy softer water, better soap performance, and fewer service calls.",
+  "scale-control": "{{title}} reduces scale formation on fixtures, heaters, and equipment—helping maintain flow rates and energy efficiency. Ideal where you want scale defense with minimal maintenance.",
+  "ultraviolet-uv": "{{title}} uses UV disinfection to inactivate bacteria and viruses without chemicals or taste changes. Fast, effective, and safe for continuous, on-demand protection.",
+  "iron-sulphur": "{{title}} targets iron, manganese, and sulfur odors to restore clear, fresh-smelling water. Protects fixtures and prevents staining while improving taste.",
+  "ph-neutralizing": "{{title}} balances low pH to prevent corrosive, blue-green staining and pinhole leaks. Stabilize plumbing and improve water taste with simple point-of-entry treatment.",
+  "tannin": "{{title}} reduces tannins that cause yellow or tea-coloured water. Achieve better clarity and taste—especially important for wells near organic-rich soils.",
+  "whole-home-filtration": "{{title}} provides whole-home sediment and chlorine reduction so showers, laundry, and cooking water are clean and consistent. A strong foundation for better water throughout the house.",
+  "hybrid": "{{title}} combines multiple treatment steps (e.g., softening + filtration) in one compact system to solve hard-water and taste/odour problems together—saving space and service time.",
+  "chemical-removal": "{{title}} reduces chlorine and other chemicals that affect taste and odour. Great as a pre-treatment to protect downstream equipment and improve water for drinking and cooking."
+}
