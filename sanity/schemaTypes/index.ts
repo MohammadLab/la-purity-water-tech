@@ -7,7 +7,7 @@ import product from "./product";
 import resource from "./resource";
 import siteSettings from "./siteSettings";
 
-const schemaTypes = [
+export const schemaTypes = [
   brand,
   category,
   faq,

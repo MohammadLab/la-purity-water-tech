@@ -1,26 +1,15 @@
 import { defineConfig } from "sanity";
 import { deskTool } from "sanity/desk";
-import { visionTool } from "@sanity/vision";
-import deskStructure from "./deskStructure";
-import schemaTypes from "./schemaTypes";
-
-const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || process.env.SANITY_PROJECT_ID || "znbgi3bm";
-const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || process.env.SANITY_DATASET || "production";
-const apiVersion = process.env.SANITY_API_VERSION || "2025-01-01";
-const studioTitle = "LaPurity Water Tech — Studio";
+import { schemaTypes } from "./schemaTypes"; // use the named export
 
 export default defineConfig({
   name: "default",
-  title: studioTitle,
-  projectId,
-  dataset,
+  title: "LaPurity Water Tech",
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "znbgi3bm",
+  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || "production",
   basePath: "/studio",
   plugins: [
-    deskTool({ structure: deskStructure }),
-    visionTool({ defaultApiVersion: apiVersion }),
+    deskTool(), // TEMP: use default desk to avoid structure issues while we verify
   ],
-  schema: {
-    types: schemaTypes,
-  },
+  schema: { types: schemaTypes },
 });
-
