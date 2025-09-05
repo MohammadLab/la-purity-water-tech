@@ -1,18 +1,10 @@
-type Product = {
-  _id: string;
-  title: string;
-  slug?: { current: string } | string;
-  heroImage?: any;
-};
+import ProductCard from "./ProductCard";
 
-export default function ProductGrid({ products = [] as Product[] }) {
+export default function ProductGrid({ products = [] }: { products: any[] }) {
+  if (!products.length) return <p className="text-sm text-gray-500">No products found.</p>;
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      {products.map((p) => (
-        <div key={p._id} className="border rounded-lg p-4">
-          <h3 className="font-semibold">{p.title}</h3>
-        </div>
-      ))}
+    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {products.map((p) => <ProductCard key={p._id} product={p} />)}
     </div>
   );
 }
