@@ -14,28 +14,29 @@ export default async function Home() {
 
   return (
     <main className="min-h-screen bg-white text-gray-900">
-      {/* Tall Header with Logo + Tabs */}
-      <header className="relative border-b">
-        {/* smaller/softer hero image (kept subtle so logo + tabs pop) */}
+      {/* ===== Hero Banner (tabs on top, big title over image) ===== */}
+      <header className="relative">
+        {/* Background image */}
         <div className="absolute inset-0 -z-10">
-          {/* Put your hero image at public/images/hero-blue.jpg */}
+          {/* Put your wide image at /public/images/hero-blue.jpg */}
           <Image
             src="/images/hero-blue.jpg"
-            alt="Water treatment backdrop"
+            alt="LaPurity background"
             fill
             priority
-            className="object-cover opacity-50 blur-[1px]"
+            className="object-cover opacity-60 blur-[1px]"
           />
-          {/* blue vibe gradient wash */}
+          {/* Blue vibe overlay */}
           <div className="absolute inset-0 bg-gradient-to-b from-[#0D1B2A]/70 via-[#0D1B2A]/40 to-[#00C2FF]/10" />
         </div>
 
-        {/* Top tabs (navigation) */}
+        {/* Tabs (top navigation) */}
         <Container className="pt-4">
           <nav
             className="flex items-center justify-center gap-6 text-sm font-medium text-white/90"
             aria-label="Primary"
           >
+            <Link className="hover:text-white" href="/">Home</Link>
             <Link className="hover:text-white" href="/products">Products</Link>
             <Link className="hover:text-white" href="/products/water-softeners">Water Softeners</Link>
             <Link className="hover:text-white" href="/products/uv">UV</Link>
@@ -45,48 +46,46 @@ export default async function Home() {
           </nav>
         </Container>
 
-        {/* Tall head to allow a BIG logo */}
-        <Container className="py-14 md:py-20">
-          <div className="flex flex-col items-center text-center">
-            {/* swap with your real logo asset */}
-            <Image
-              src="/logo-lapurity.svg"
-              alt="LaPurity"
-              width={560}
-              height={120}
-              className="h-auto w-[70%] max-w-[560px] drop-shadow-lg"
-            />
-            <p className="mt-4 max-w-2xl text-white/85">
-              Engineered water treatment for every home.
-            </p>
-
-            {/* CTA row (optional) */}
-            <div className="mt-6 flex gap-3">
-              <Link
-                href="/products"
-                className="inline-flex h-11 items-center rounded-full bg-white/95 px-6 text-sm font-semibold text-[#0D1B2A] shadow hover:bg-white"
-              >
-                Browse Products
-              </Link>
-              <Link
-                href="/contact"
-                className="inline-flex h-11 items-center rounded-full border border-white/50 px-6 text-sm font-semibold text-white hover:bg-white/10"
-              >
-                Request a Quote
-              </Link>
+        {/* Tall head with big title + breadcrumb (like your reference) */}
+        <Container className="py-24 md:py-28">
+          <div className="text-center">
+            <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-white drop-shadow-sm">
+              ABOUT LAPURITY
+            </h1>
+            <div className="mt-4 text-xs md:text-sm text-white/80">
+              <Link href="/" className="hover:underline">Home</Link>
+              <span className="mx-2">/</span>
+              <span>About Us</span>
             </div>
           </div>
         </Container>
       </header>
 
-      {/* Featured products preview */}
-      <Section className="py-12">
+      {/* ===== Content / Featured ===== */}
+      <Section className="py-14">
         <Container>
-          <div className="flex items-end justify-between">
+          <div className="grid gap-10 md:grid-cols-[1fr,2fr] items-start">
+            <div className="rounded-2xl border bg-white p-6 shadow-sm">
+              <h3 className="text-lg font-semibold text-[#0D1B2A]">Our Promise</h3>
+              <p className="mt-2 text-sm text-gray-600 leading-6">
+                At LaPurity, we engineer water treatment systems that elevate taste, protect fixtures,
+                and improve daily life—built with reliability, performance, and clean design.
+              </p>
+            </div>
+            <div className="rounded-2xl border bg-white p-6 shadow-sm">
+              <blockquote className="text-xl font-medium text-[#0D1B2A]">
+                “Softer water. Fewer contaminants. Longer-lasting homes.”
+              </blockquote>
+              <p className="mt-2 text-sm text-gray-500">— LaPurity Management</p>
+            </div>
+          </div>
+
+          {/* section divider like the reference */}
+          <div className="mt-12 h-px w-full bg-gradient-to-r from-[#00C2FF]/40 via-[#00C2FF]/10 to-transparent" />
+
+          <div className="mt-10 flex items-end justify-between">
             <div>
-              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#0D1B2A]">
-                Featured Products
-              </h2>
+              <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-[#0D1B2A]">Featured Products</h2>
               <div
                 aria-hidden
                 className="mt-1 h-px w-24 rounded-full bg-gradient-to-r from-[#00C2FF]/40 via-[#00C2FF]/20 to-transparent"
