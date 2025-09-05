@@ -6,6 +6,8 @@ import ProductGrid from "@/components/product/ProductGrid";
 import { getAllProducts, getAllCategories } from "@/lib/queries";
 import TabsRow from "@/components/nav/TabsRow";
 import StickyTabs from "@/components/nav/StickyTabs";
+import ValueProps from "@/components/sections/ValueProps";
+
 
 // Revalidate content every 60s (ISR)
 export const revalidate = 60;
@@ -106,44 +108,9 @@ export default async function Home() {
       {/* Sticky tabs (same style) that only appear after the hero leaves */}
       <StickyTabs />
 
-      {/* =====================================================================
-         “Solves all your water treatment problems” section
-         ===================================================================== */}
-      <Section className="py-12 md:py-16">
-        <Container>
-          <div className="text-center">
-            <h2 className="text-2xl md:3xl lg:text-3xl font-bold tracking-tight text-[#0D1B2A]">
-              LaPurity Water Tech solves all your water treatment problems…
-            </h2>
-            <p className="mt-3 text-gray-600 max-w-2xl mx-auto">
-              Softer water, fewer contaminants, longer-lasting fixtures, and better taste —
-              engineered solutions for municipal and well water.
-            </p>
-          </div>
+      {/* Fancy value props */}
+      <ValueProps />
 
-          {/* Three value props (match your brand points here) */}
-          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            <div className="rounded-2xl border bg-white p-6 shadow-sm">
-              <h3 className="font-semibold text-[#0D1B2A]">Premium Components</h3>
-              <p className="mt-2 text-sm text-gray-600">
-                High-quality tanks, valves, and media chosen for reliability and performance.
-              </p>
-            </div>
-            <div className="rounded-2xl border bg-white p-6 shadow-sm">
-              <h3 className="font-semibold text-[#0D1B2A]">Engineered for Canada</h3>
-              <p className="mt-2 text-sm text-gray-600">
-                Systems sized and configured for Canadian homes and water profiles.
-              </p>
-            </div>
-            <div className="rounded-2xl border bg-white p-6 shadow-sm">
-              <h3 className="font-semibold text-[#0D1B2A]">Service & Support</h3>
-              <p className="mt-2 text-sm text-gray-600">
-                Friendly expertise before and after install — parts, media, and maintenance.
-              </p>
-            </div>
-          </div>
-        </Container>
-      </Section>
 
       {/* =====================================================================
          Categories strip (6 cards)
