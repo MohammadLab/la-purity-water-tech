@@ -24,8 +24,11 @@ importers:
         specifier: ^2.5.1
         version: 2.5.1
       groq:
-        specifier: ^3.53.0
+        specifier: ^3.99.0
         version: 3.99.0
+      lucide-react:
+        specifier: ^0.542.0
+        version: 0.542.0(react@18.2.0)
       next:
         specifier: 14.2.5
         version: 14.2.5(@babel/core@7.28.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -3874,6 +3877,11 @@ packages:
     resolution: {integrity: sha512-Jo6dJ04CmSjuznwJSS3pUeWmd/H0ffTlkXXgwZi+eq1UCmqQwCh+eLsYOYCwY991i2Fah4h1BEMCx4qThGbsiA==}
     engines: {node: '>=10'}
 
+  lucide-react@0.542.0:
+    resolution: {integrity: sha512-w3hD8/SQB7+lzU2r4VdFyzzOzKnUjTZIF/MQJGSSvni7Llewni4vuViRppfRAa2guOsY5k4jZyxw/i9DQHv+dw==}
+    peerDependencies:
+      react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
+
   make-dir@2.1.0:
     resolution: {integrity: sha512-LS9X+dc8KLxXCb8dni79fLIIUA5VyZoyjSMCwTluaXA0o27cCK0bhXkpgw+sTXVpPy/lSO57ilRixqk0vDmtRA==}
     engines: {node: '>=6'}
@@ -7535,7 +7543,7 @@ snapshots:
     dependencies:
       '@sanity/client': 7.11.0(debug@4.4.1)
       '@sanity/comlink': 3.0.9
-      '@sanity/visual-editing-types': 1.1.5(@sanity/client@7.11.0)(@sanity/types@4.6.1(@types/react@18.3.24))
+      '@sanity/visual-editing-types': 1.1.5(@sanity/client@7.11.0(debug@4.4.1))(@sanity/types@4.6.1(@types/react@18.3.24)(debug@4.4.1))
     transitivePeerDependencies:
       - '@sanity/types'
 
@@ -7750,12 +7758,6 @@ snapshots:
       '@sanity/types': 4.6.1(@types/react@18.3.24)(debug@4.4.1)
 
   '@sanity/visual-editing-types@1.1.5(@sanity/client@7.11.0(debug@4.4.1))(@sanity/types@4.6.1(@types/react@18.3.24)(debug@4.4.1))':
-    dependencies:
-      '@sanity/client': 7.11.0(debug@4.4.1)
-    optionalDependencies:
-      '@sanity/types': 4.6.1(@types/react@18.3.24)(debug@4.4.1)
-
-  '@sanity/visual-editing-types@1.1.5(@sanity/client@7.11.0)(@sanity/types@4.6.1(@types/react@18.3.24))':
     dependencies:
       '@sanity/client': 7.11.0(debug@4.4.1)
     optionalDependencies:
@@ -10046,6 +10048,10 @@ snapshots:
   lru-cache@6.0.0:
     dependencies:
       yallist: 4.0.0
+
+  lucide-react@0.542.0(react@18.2.0):
+    dependencies:
+      react: 18.2.0
 
   make-dir@2.1.0:
     dependencies:
