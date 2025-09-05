@@ -1,10 +1,11 @@
 import Container from "@/components/ui/Container";
 import Section from "@/components/ui/Section";
 
-/** Fancy, legible, lightweight value-prop section (no extra deps)
+/** Fancy, legible, detailed value-prop section (no extra deps)
  * - Subtle radial background
  * - Glass cards with gradient ring + hover lift
  * - Inline SVG icons (no external icon lib)
+ * - Extra detail in cards (bulleted highlights)
  */
 export default function ValueProps() {
   return (
@@ -35,7 +36,8 @@ export default function ValueProps() {
               </svg>
             }
             title="Premium Components"
-            text="High-quality tanks, valves, and media chosen for reliability and performance."
+            text="Our systems are built only with high-grade tanks, valves, and filter media, ensuring durability and efficiency."
+            bullets={["Corrosion‑resistant tanks","Certified control valves","Long‑life resin and media"]}
           />
 
           <Card
@@ -45,7 +47,8 @@ export default function ValueProps() {
               </svg>
             }
             title="Engineered for Canada"
-            text="Systems sized and configured for Canadian homes and water profiles."
+            text="Every system is sized and configured with Canadian water profiles and climate in mind."
+            bullets={["Tested for hard municipal water","Winter‑ready designs","Optimized flow rates"]}
           />
 
           <Card
@@ -56,7 +59,8 @@ export default function ValueProps() {
               </svg>
             }
             title="Service & Support"
-            text="Friendly expertise before and after install — parts, media, and maintenance."
+            text="We back every install with knowledgeable support, parts availability, and routine service."
+            bullets={["Responsive customer care","Stocked spare parts","Maintenance reminders"]}
           />
         </div>
       </Container>
@@ -68,10 +72,12 @@ function Card({
   icon,
   title,
   text,
+  bullets = [],
 }: {
   icon: React.ReactNode;
   title: string;
   text: string;
+  bullets?: string[];
 }) {
   return (
     <div className="group relative rounded-2xl border bg-white/80 p-6 shadow-sm ring-1 ring-black/5 backdrop-blur transition hover:-translate-y-0.5 hover:shadow-md">
@@ -85,6 +91,13 @@ function Card({
         <div>
           <h3 className="font-semibold text-[#0D1B2A]">{title}</h3>
           <p className="mt-2 text-sm text-gray-600">{text}</p>
+          {bullets.length > 0 && (
+            <ul className="mt-3 list-disc list-inside text-sm text-gray-500 space-y-1">
+              {bullets.map((b, i) => (
+                <li key={i}>{b}</li>
+              ))}
+            </ul>
+          )}
         </div>
       </div>
 
