@@ -2,19 +2,36 @@ import Container from "@/components/ui/Container";
 import Section from "@/components/ui/Section";
 
 /** Fancy, legible, detailed value-prop section (no extra deps)
- * - Subtle radial background
- * - Glass cards with gradient ring + hover lift
- * - Inline SVG icons (no external icon lib)
- * - Extra detail in cards (bulleted highlights)
+ * Visual upgrades:
+ *  - Soft waves + bubbles background (subtle, performance‑friendly SVG/divs)
+ *  - Glass cards with gradient border + hover lift/shine
+ *  - Inline SVG icons
+ *  - Bullet highlights
  */
 export default function ValueProps() {
   return (
-    <Section className="relative overflow-hidden py-14 md:py-18">
-      {/* Ambient background */}
+    <Section className="relative overflow-hidden py-16 md:py-20">
+      {/* Ambient gradient glow */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(1200px_400px_at_50%_-10%,rgba(0,194,255,0.10),transparent_60%)]"
+        className="pointer-events-none absolute inset-0 -z-20 bg-[radial-gradient(1200px_400px_at_50%_-10%,rgba(0,194,255,0.10),transparent_60%)]"
       />
+
+      {/* Decorative top wave */}
+      <svg
+        aria-hidden
+        className="absolute -top-10 left-1/2 -z-10 h-24 w-[1400px] -translate-x-1/2 text-cyan-200/25"
+        viewBox="0 0 1400 96"
+        preserveAspectRatio="none"
+        fill="currentColor"
+      >
+        <path d="M0 64c104-48 208-48 312 0s208 48 312 0 208-48 312 0 208 48 312 0v32H0V64z" />
+      </svg>
+
+      {/* Floating bubbles (very light) */}
+      <div aria-hidden className="absolute -z-10 right-[8%] top-10 h-24 w-24 rounded-full bg-cyan-200/20 blur-2xl" />
+      <div aria-hidden className="absolute -z-10 left-[10%] top-24 h-16 w-16 rounded-full bg-cyan-300/20 blur-xl" />
+      <div aria-hidden className="absolute -z-10 left-[40%] bottom-10 h-20 w-20 rounded-full bg-cyan-200/20 blur-xl" />
 
       <Container>
         {/* Title + sub */}
@@ -64,6 +81,17 @@ export default function ValueProps() {
           />
         </div>
       </Container>
+
+      {/* Bottom wave */}
+      <svg
+        aria-hidden
+        className="absolute -bottom-12 left-1/2 -z-10 h-24 w-[1400px] -translate-x-1/2 rotate-180 text-cyan-200/25"
+        viewBox="0 0 1400 96"
+        preserveAspectRatio="none"
+        fill="currentColor"
+      >
+        <path d="M0 64c104-48 208-48 312 0s208 48 312 0 208-48 312 0 208 48 312 0v32H0V64z" />
+      </svg>
     </Section>
   );
 }
@@ -80,29 +108,31 @@ function Card({
   bullets?: string[];
 }) {
   return (
-    <div className="group relative rounded-2xl border bg-white/80 p-6 shadow-sm ring-1 ring-black/5 backdrop-blur transition hover:-translate-y-0.5 hover:shadow-md">
-      {/* Gradient ring on hover */}
-      <div className="absolute inset-0 rounded-2xl ring-0 group-hover:ring-2 group-hover:ring-cyan-400/50 transition" />
+    <div className="group relative rounded-2xl p-[1px] bg-gradient-to-b from-cyan-200/50 via-transparent to-cyan-200/50">
+      <div className="relative rounded-2xl border bg-white/70 p-6 shadow-sm ring-1 ring-black/5 backdrop-blur transition hover:-translate-y-0.5 hover:shadow-md">
+        {/* Shine overlay on hover */}
+        <div className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 transition group-hover:opacity-100 [background:linear-gradient(100deg,transparent,rgba(255,255,255,0.4),transparent)_-200%_0/200%_100%] group-hover:[background-position:200%_0]" />
 
-      <div className="flex items-start gap-3">
-        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#0D1B2A] text-white/95 ring-1 ring-black/5">
-          {icon}
+        <div className="relative z-10 flex items-start gap-3">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#0D1B2A] text-white/95 ring-1 ring-black/5">
+            {icon}
+          </div>
+          <div>
+            <h3 className="font-semibold text-[#0D1B2A]">{title}</h3>
+            <p className="mt-2 text-sm text-gray-600">{text}</p>
+            {bullets.length > 0 && (
+              <ul className="mt-3 list-disc list-inside text-sm text-gray-500 space-y-1">
+                {bullets.map((b, i) => (
+                  <li key={i}>{b}</li>
+                ))}
+              </ul>
+            )}
+          </div>
         </div>
-        <div>
-          <h3 className="font-semibold text-[#0D1B2A]">{title}</h3>
-          <p className="mt-2 text-sm text-gray-600">{text}</p>
-          {bullets.length > 0 && (
-            <ul className="mt-3 list-disc list-inside text-sm text-gray-500 space-y-1">
-              {bullets.map((b, i) => (
-                <li key={i}>{b}</li>
-              ))}
-            </ul>
-          )}
-        </div>
+
+        {/* tiny accent underline that animates in */}
+        <div className="relative z-10 mt-4 h-0.5 w-10 origin-left scale-x-0 rounded-full bg-gradient-to-r from-[#00C2FF] to-transparent transition group-hover:scale-x-100" />
       </div>
-
-      {/* tiny accent underline that animates in */}
-      <div className="mt-4 h-0.5 w-10 origin-left scale-x-0 rounded-full bg-gradient-to-r from-[#00C2FF] to-transparent transition group-hover:scale-x-100" />
     </div>
   );
 }
