@@ -4,11 +4,13 @@ import Container from "@/components/ui/Container";
 import Section from "@/components/ui/Section";
 import ProductGrid from "@/components/product/ProductGrid";
 import { getAllProducts, getAllCategories } from "@/lib/queries";
+import TabsRow from "@/components/nav/TabsRow";
+import StickyTabs from "@/components/nav/StickyTabs";
 
 // Revalidate content every 60s (ISR)
 export const revalidate = 60;
 
-// Optional: SEO for the Homepage
+// Optional SEO
 export const metadata = {
   title: "LaPurity Water Tech Inc. — Water Softeners, Filtration & UV",
   description:
@@ -26,6 +28,7 @@ function toCategoryHref(slugish: Cat["slug"]) {
 }
 
 export default async function Home() {
+  // Data: featured products + categories
   const products = await getAllProducts();
   const featured = Array.isArray(products) ? products.slice(0, 6) : [];
 
@@ -38,7 +41,7 @@ export default async function Home() {
       key: (typeof c.slug === "string" ? c.slug : c.slug?.current) ?? `cat-${i}`,
     }));
   } catch {
-    // Fallback manual list (safe if Sanity categories aren’t wired yet)
+    // Fallback manual list if Sanity categories aren’t wired yet
     categories = [
       { title: "Water Softeners", href: "/products/water-softeners", key: "softeners" },
       { title: "Chemical Removal", href: "/products/chemical-removal", key: "chem" },
@@ -52,29 +55,28 @@ export default async function Home() {
   return (
     <main className="min-h-screen bg-white text-gray-900">
       {/* =====================================================================
-         HERO (full-bleed)
+         HERO (full-bleed banner; same 'hero as a section' tactic)
          ===================================================================== */}
       <section
+        id="hero" // ← StickyTabs watches this sentinel
         className="
-  relative isolate
-  w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]
-  bg-repeat-x bg-[length:1600px_auto] bg-top
-"
-
+          relative isolate
+          w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]
+          bg-no-repeat bg-cover bg-center
+        "
         style={{ backgroundImage: "url('/images/hero-blue.jpg')" }}
       >
-        {/* Soft white veil + tiny blur for legibility */}
+        {/* blue vibe: soft dim + slight blur so text stays readable */}
         <div className="absolute inset-0 bg-white/65 backdrop-blur-[2px]" />
 
-        {/* Centered content container */}
+        {/* Inner content stays centered in a max width container */}
         <div className="relative z-10 mx-auto max-w-[1400px] px-4 py-16 md:py-24 text-center">
-          {/* Big round logo (works perfectly with circular logos) */}
+          {/* Large circular logo (optional — comment if you prefer only text) */}
           <div
             className="
               mx-auto relative rounded-full bg-white/95 p-5 shadow-xl ring-1 ring-black/5
               w-[200px] h-[200px] sm:w-[240px] sm:h-[240px] md:w-[280px] md:h-[280px]
             "
-            aria-hidden="true"
           >
             <Image
               src="/logo-lapurity-circle.png"
@@ -86,6 +88,7 @@ export default async function Home() {
             />
           </div>
 
+          {/* Headline + subhead */}
           <h1 className="mt-6 text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#0D1B2A]">
             Residential Water Softening, Filtration, &amp; Purification Solutions
           </h1>
@@ -93,41 +96,15 @@ export default async function Home() {
             Proud Canadian provider of premium whole-home water treatment systems.
           </p>
 
-          {/* Tabs inside hero (Excalibur-style strip) */}
-          <nav
-            aria-label="Primary"
-            className="
-              mt-8 inline-flex flex-wrap items-center justify-center gap-x-6 gap-y-3
-              rounded-2xl bg-[#0D1B2A] px-4 py-3 text-sm font-medium text-white
-              ring-1 ring-black/5 shadow
-            "
-          >
-            <Link href="/" className="hover:text-cyan-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300">Home</Link>
-            <Link href="/products" className="hover:text-cyan-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300">Products</Link>
-            <Link href="/products/water-softeners" className="hover:text-cyan-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300">Water Softeners</Link>
-            <Link href="/products/uv" className="hover:text-cyan-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300">UV</Link>
-            <Link href="/products/chemical-removal" className="hover:text-cyan-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300">Chemical Removal</Link>
-            <Link href="/resources" className="hover:text-cyan-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300">Resources</Link>
-            <Link href="/contact" className="hover:text-cyan-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300">Contact</Link>
-          </nav>
+          {/* Tabs row inside the hero (like Excalibur’s strip) */}
+          <div className="mt-8">
+            <TabsRow />
+          </div>
         </div>
       </section>
 
-      {/* Sticky tabs that appear after scrolling past hero */}
-      <div className="sticky top-0 z-40 hidden bg-[#0D1B2A]/95 backdrop-blur supports-[backdrop-filter]:bg-[#0D1B2A]/80 md:block">
-        <div className="mx-auto max-w-[1400px] px-4">
-          <nav className="flex gap-6 py-2 text-sm font-medium text-white">
-            <Link href="/" className="hover:text-cyan-300">Home</Link>
-            <Link href="/products" className="hover:text-cyan-300">Products</Link>
-            <Link href="/products/water-softeners" className="hover:text-cyan-300">Water Softeners</Link>
-            <Link href="/products/uv" className="hover:text-cyan-300">UV</Link>
-            <Link href="/products/chemical-removal" className="hover:text-cyan-300">Chemical Removal</Link>
-            <Link href="/resources" className="hover:text-cyan-300">Resources</Link>
-            <Link href="/contact" className="hover:text-cyan-300">Contact</Link>
-          </nav>
-        </div>
-      </div>
-
+      {/* Sticky tabs (same style) that only appear after the hero leaves */}
+      <StickyTabs />
 
       {/* =====================================================================
          “Solves all your water treatment problems” section
@@ -135,14 +112,16 @@ export default async function Home() {
       <Section className="py-12 md:py-16">
         <Container>
           <div className="text-center">
-            <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-[#0D1B2A]">
+            <h2 className="text-2xl md:3xl lg:text-3xl font-bold tracking-tight text-[#0D1B2A]">
               LaPurity Water Tech solves all your water treatment problems…
             </h2>
             <p className="mt-3 text-gray-600 max-w-2xl mx-auto">
-              Softer water, fewer contaminants, longer-lasting fixtures, and better taste — engineered solutions for municipal and well water.
+              Softer water, fewer contaminants, longer-lasting fixtures, and better taste —
+              engineered solutions for municipal and well water.
             </p>
           </div>
 
+          {/* Three value props (match your brand points here) */}
           <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             <div className="rounded-2xl border bg-white p-6 shadow-sm">
               <h3 className="font-semibold text-[#0D1B2A]">Premium Components</h3>
@@ -167,13 +146,13 @@ export default async function Home() {
       </Section>
 
       {/* =====================================================================
-         Categories strip
+         Categories strip (6 cards)
          ===================================================================== */}
       <Section className="py-10">
         <Container>
           <div className="flex items-end justify-between">
             <div>
-              <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-[#0D1B2A]">
+              <h2 className="text-2xl md:3xl lg:text-3xl font-bold tracking-tight text-[#0D1B2A]">
                 Explore Categories
               </h2>
               <div
@@ -208,7 +187,7 @@ export default async function Home() {
         <Container>
           <div className="flex items-end justify-between">
             <div>
-              <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-[#0D1B2A]">
+              <h2 className="text-2xl md:3xl lg:text-3xl font-bold tracking-tight text-[#0D1B2A]">
                 Featured Products
               </h2>
               <div
