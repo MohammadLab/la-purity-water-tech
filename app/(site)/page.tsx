@@ -7,6 +7,9 @@ import { getAllProducts, getAllCategories } from "@/lib/queries";
 import TabsRow from "@/components/nav/TabsRow";
 import StickyTabs from "@/components/nav/StickyTabs";
 import ValueProps from "@/components/sections/ValueProps";
+import CategoryCard from "@/components/category/CategoryCard";
+
+
 
 
 // Revalidate content every 60s (ISR)
@@ -53,6 +56,45 @@ export default async function Home() {
       { title: "Scale Control", href: "/products/scale-control", key: "scale" },
     ];
   }
+
+  // map of super-short blurbs by category key (edit to taste)
+  const categoryBlurbs: Record<string, string> = {
+    softeners: "Stop scale, protect fixtures.",
+    chem: "Reduce chlorine, VOCs, PFAS.",
+    iron: "Clear iron/sulphur. No odour.",
+    uv: "UV disinfection for safe water.",
+    tannin: "Cut organic tannins.",
+    scale: "Hardness control (no salt).",
+  };
+
+  // try to find a product image for a given category key
+  function firstImageForCategory(catKey: string): string | null {
+    if (!Array.isArray(products)) return null;
+
+    for (const p of products as any[]) {
+      // adjust these keys to match your Sanity shape
+      const catSlug = p?.category?.slug || p?.categorySlug || p?.category;
+      const key = typeof catSlug === "string" ? catSlug : catSlug?.current;
+      if (key !== catKey) continue;
+
+      const img =
+        p?.images?.[0]?.asset?.url ||
+        p?.mainImage?.asset?.url ||
+        p?.imageUrl ||
+        null;
+
+      if (img) return img;
+    }
+    return null;
+  }
+
+  // combine categories with image + blurb
+  const categoryCards = categories.map((c) => ({
+    ...c,
+    image: firstImageForCategory(c.key),
+    desc: categoryBlurbs[c.key] ?? "Premium systems sized for Canadian homes.",
+  }));
+
 
   return (
     <main className="min-h-screen bg-white text-gray-900">
@@ -119,7 +161,7 @@ export default async function Home() {
         <Container>
           <div className="flex items-end justify-between">
             <div>
-              <h2 className="text-2xl md:3xl lg:text-3xl font-bold tracking-tight text-[#0D1B2A]">
+              <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-[#0D1B2A]">
                 Explore Categories
               </h2>
               <div
@@ -133,19 +175,19 @@ export default async function Home() {
           </div>
 
           <div className="mt-6 grid gap-4 sm:grid-cols-2 md:grid-cols-3">
-            {categories.map((c) => (
-              <Link
+            {categoryCards.map((c) => (
+              <CategoryCard
                 key={c.key}
+                title={c.title}
                 href={c.href}
-                className="rounded-2xl border bg-white p-6 shadow-sm transition hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-400"
-              >
-                <div className="text-sm text-gray-500">Category</div>
-                <div className="mt-1 text-lg font-semibold text-[#0D1B2A]">{c.title}</div>
-              </Link>
+                imageUrl={c.image}
+                description={c.desc}
+              />
             ))}
           </div>
         </Container>
       </Section>
+
 
       {/* =====================================================================
          Featured Products grid
