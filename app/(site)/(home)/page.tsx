@@ -1,4 +1,5 @@
-import HeaderTall from "@/components/nav/HeaderTall";
+// app/(site)/(home)/page.tsx  (or app/(site)/page.tsx if you didn’t make the group)
+import HeroBannerFull from "@/components/hero/HeroBannerFull";
 import Container from "@/components/ui/Container";
 import Section from "@/components/ui/Section";
 import ProductGrid from "@/components/product/ProductGrid";
@@ -11,8 +12,11 @@ export default async function Home() {
   const featured = Array.isArray(products) ? products.slice(0, 6) : [];
 
   return (
-    <main className="min-h-screen bg-white">
-      <HeaderTall logoSrc="/logo-lapurity-circle.png" />
+    <main className="bg-white text-gray-900">
+      <HeroBannerFull
+        logoSrc="/logo-lapurity-circle.png"
+        bg="/images/hero-blue.jpg"      // put your chosen wide blue background here
+      />
 
       <Section className="py-14">
         <Container>
