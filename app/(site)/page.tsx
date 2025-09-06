@@ -49,7 +49,10 @@ export default async function Home() {
       title: c.title,
       href: toCategoryHref(c.slug),
       key: (typeof c.slug === "string" ? c.slug : c.slug?.current) ?? `cat-${i}`,
+      thumbnail: c.thumbnail,  // keep Sanity thumbnail
+      blurb: c.blurb,          // keep Sanity blurb
     }));
+
   } catch {
     // Fallback manual list if Sanity categories aren’t wired yet
     categories = [
@@ -61,19 +64,6 @@ export default async function Home() {
       { title: "Scale Control", href: "/products/scale-control", key: "scale" },
     ];
   }
-
-
-  // ultra-short blurbs (tweak to taste)
-  const categoryBlurbs: Record<string, string> = {
-    "water-softeners": "Eliminate hardness, stop scale build-up, protect fixtures.",
-    "chemical-removal": "Reduce chlorine, VOCs, PFAS for cleaner taste & odour.",
-    "iron-sulphur": "Clear orange staining & rotten-egg smell for crystal water.",
-    "uv": "Chemical-free disinfection — kills bacteria and viruses.",
-    "tannin": "Remove tea-coloured tint from well water tannins.",
-    "scale-control": "Condition hardness to minimize limescale (low-maintenance).",
-    "hybrid-multi-contaminant": "All-in-one systems for complex water problems.",
-  };
-
 
   // Try to find the first product image for a category key
   function firstImageForCategory(catKey: string): string | null {
@@ -117,7 +107,7 @@ export default async function Home() {
       ...c,
       key: slug,
       image,
-      desc: c.blurb ?? "Premium systems sized for Canadian homes.", // now from Sanity
+      desc: c.blurb,
     };
   });
 
