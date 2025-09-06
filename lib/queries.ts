@@ -1,6 +1,28 @@
 import { groq } from "next-sanity";
 import { client } from "./sanity.client";
 
+const CATEGORY_TITLES = [
+  "Chemical Removal",
+  "Hybrid / Multi-contaminant",
+  "Iron / Sulphur / Manganese",
+  "pH / Neutralizing",
+  "Scale Control Systems",
+  "Smart Connect Ecosystem",
+  "Tannin",
+  "Ultraviolet (UV)",
+  "Water Softeners",
+  "Whole Home Filtration",
+];
+
+export const categoriesQuery = groq`
+  *[_type == "category" && title in $titles]{
+    _id,
+    title,
+    slug,
+    thumbnail
+  } | order(title asc)
+`;
+
 export const productProjection = `
   _id,
   title,
@@ -27,7 +49,7 @@ export const productsByCategoryGroq = groq`
 `;
 
 export async function getAllCategories() {
-  return client.fetch(allCategoriesGroq);
+  return client.fetch(categoriesQuery, { titles: CATEGORY_TITLES });
 }
 
 export async function getProductsByCategory(category: string) {
