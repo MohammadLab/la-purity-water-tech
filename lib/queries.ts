@@ -19,9 +19,11 @@ export const categoriesQuery = groq`
     _id,
     title,
     slug,
-    thumbnail
+    thumbnail,
+    blurb
   } | order(title asc)
 `;
+
 
 export const productProjection = `
   _id,

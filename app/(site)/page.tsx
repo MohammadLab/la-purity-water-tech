@@ -41,7 +41,7 @@ export default async function Home() {
   let categories: Array<{ title: string; href: string; key: string }> = [];
   try {
     const cats = (await getAllCategories()) as Cat[] | undefined;
-    categories = (cats ?? []).slice(0, 6).map((c, i) => ({
+    categories = (cats ?? []).map((c, i) => ({
       title: c.title,
       href: toCategoryHref(c.slug),
       key: (typeof c.slug === "string" ? c.slug : c.slug?.current) ?? `cat-${i}`,
@@ -95,24 +95,27 @@ export default async function Home() {
     return null;
   }
 
-  const cards = categories.map((c: any) => {
+
+
+
+  // Build the cards data
+  const categoryCards = categories.map((c: any) => {
     const slug = typeof c.key === "string" ? c.key : c?.slug?.current || c?.slug;
+
+    let image: string | null = null;
+    if (c.thumbnail?.asset?._ref) {
+      image = urlFor(c.thumbnail).width(1200).height(300).fit("crop").url();
+    } else {
+      image = firstImageForCategory(slug);
+    }
+
     return {
       ...c,
       key: slug,
-      image: firstImageForCategory(slug),
-      desc: categoryBlurbs[slug] ?? "Premium systems sized for Canadian homes.",
+      image,
+      desc: c.blurb ?? "Premium systems sized for Canadian homes.", // now from Sanity
     };
   });
-
-  // Build the cards data
-  const categoryCards = categories.map((c) => ({
-    ...c,
-    image: firstImageForCategory(c.key),
-    desc: categoryBlurbs[c.key] ?? "Premium systems sized for Canadian homes.",
-  }));
-
-
 
   return (
     <main className="min-h-screen bg-white text-gray-900">
@@ -187,13 +190,11 @@ export default async function Home() {
                 className="mt-1 h-px w-24 rounded-full bg-gradient-to-r from-[#00C2FF]/40 via-[#00C2FF]/20 to-transparent"
               />
             </div>
-            <Link href="/products" className="text-sm font-semibold text-cyan-700 hover:underline">
-              View all →
-            </Link>
           </div>
 
-          <div className="mt-6 grid gap-6 sm:grid-cols-2 md:grid-cols-3">
-            {cards.map((c: any) => (
+          <div className="mt-6 grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 justify-items-center">
+
+            {categoryCards.map((c: any) => (
               <CategoryCard
                 key={c.key}
                 title={c.title}
@@ -202,6 +203,7 @@ export default async function Home() {
                 description={c.desc}
               />
             ))}
+
           </div>
 
         </Container>

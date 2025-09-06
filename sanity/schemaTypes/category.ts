@@ -29,6 +29,14 @@ export default defineType({
       description:
         "Optional category thumbnail (ideal: 1200×300). Falls back to gradient if not set.",
     }),
+
+    defineField({
+      name: "blurb",
+      title: "Hover Blurb",
+      type: "string",
+      description: "Ultra-short description (≤ 8 words) for category card hover pop.",
+    }),
+
   ],
 
   preview: {

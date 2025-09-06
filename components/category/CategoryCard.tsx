@@ -16,7 +16,7 @@ export default function CategoryCard({ title, href, imageUrl, description }: Cat
     >
       <div className="relative rounded-2xl border bg-white/80 ring-1 ring-black/5 backdrop-blur">
         {/* Image header */}
-        <div className="relative h-40 w-full overflow-hidden rounded-t-2xl">
+        <div className="relative aspect-[4/3] w-full overflow-hidden rounded-t-2xl">
           {imageUrl ? (
             <Image
               src={imageUrl}
