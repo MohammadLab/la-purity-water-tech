@@ -8,6 +8,7 @@ import TabsRow from "@/components/nav/TabsRow";
 import StickyTabs from "@/components/nav/StickyTabs";
 import ValueProps from "@/components/sections/ValueProps";
 import CategoryCard from "@/components/category/CategoryCard";
+import { urlFor } from "@/lib/sanityImage"; // add this at top
 
 
 
@@ -60,32 +61,49 @@ export default async function Home() {
 
   // ultra-short blurbs (tweak to taste)
   const categoryBlurbs: Record<string, string> = {
-    softeners: "Stop scale, protect fixtures.",
-    chem: "Reduce chlorine, VOCs, PFAS.",
-    iron: "Clear iron/sulphur. No odour.",
-    uv: "UV disinfection for safe water.",
-    tannin: "Cut organic tannins.",
-    scale: "Hardness control (no salt).",
+    "water-softeners": "Eliminate hardness, stop scale build-up, protect fixtures.",
+    "chemical-removal": "Reduce chlorine, VOCs, PFAS for cleaner taste & odour.",
+    "iron-sulphur": "Clear orange staining & rotten-egg smell for crystal water.",
+    "uv": "Chemical-free disinfection — kills bacteria and viruses.",
+    "tannin": "Remove tea-coloured tint from well water tannins.",
+    "scale-control": "Condition hardness to minimize limescale (low-maintenance).",
+    "hybrid-multi-contaminant": "All-in-one systems for complex water problems.",
   };
+
 
   // Try to find the first product image for a category key
   function firstImageForCategory(catKey: string): string | null {
     if (!Array.isArray(products)) return null;
+
     for (const p of products as any[]) {
       const catSlug = p?.category?.slug || p?.categorySlug || p?.category;
       const key = typeof catSlug === "string" ? catSlug : catSlug?.current;
       if (key !== catKey) continue;
 
-      const img =
-        p?.images?.[0]?.asset?.url ||
-        p?.mainImage?.asset?.url ||
-        p?.imageUrl ||
+      // Try common shapes: images[0], mainImage, image
+      const imgObj =
+        p?.images?.[0] ??
+        p?.mainImage ??
+        p?.image ??
         null;
 
-      if (img) return img;
+      if (imgObj) {
+        // build a nice, banner-ish URL
+        return urlFor(imgObj).width(1200).height(300).fit("crop").url();
+      }
     }
     return null;
   }
+
+  const cards = categories.map((c: any) => {
+    const slug = typeof c.key === "string" ? c.key : c?.slug?.current || c?.slug;
+    return {
+      ...c,
+      key: slug,
+      image: firstImageForCategory(slug),
+      desc: categoryBlurbs[slug] ?? "Premium systems sized for Canadian homes.",
+    };
+  });
 
   // Build the cards data
   const categoryCards = categories.map((c) => ({
@@ -175,7 +193,7 @@ export default async function Home() {
           </div>
 
           <div className="mt-6 grid gap-6 sm:grid-cols-2 md:grid-cols-3">
-            {categoryCards.map((c) => (
+            {cards.map((c: any) => (
               <CategoryCard
                 key={c.key}
                 title={c.title}
