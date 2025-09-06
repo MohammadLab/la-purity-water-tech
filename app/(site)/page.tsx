@@ -57,7 +57,8 @@ export default async function Home() {
     ];
   }
 
-  // map of super-short blurbs by category key (edit to taste)
+
+  // ultra-short blurbs (tweak to taste)
   const categoryBlurbs: Record<string, string> = {
     softeners: "Stop scale, protect fixtures.",
     chem: "Reduce chlorine, VOCs, PFAS.",
@@ -67,12 +68,10 @@ export default async function Home() {
     scale: "Hardness control (no salt).",
   };
 
-  // try to find a product image for a given category key
+  // Try to find the first product image for a category key
   function firstImageForCategory(catKey: string): string | null {
     if (!Array.isArray(products)) return null;
-
     for (const p of products as any[]) {
-      // adjust these keys to match your Sanity shape
       const catSlug = p?.category?.slug || p?.categorySlug || p?.category;
       const key = typeof catSlug === "string" ? catSlug : catSlug?.current;
       if (key !== catKey) continue;
@@ -88,12 +87,13 @@ export default async function Home() {
     return null;
   }
 
-  // combine categories with image + blurb
+  // Build the cards data
   const categoryCards = categories.map((c) => ({
     ...c,
     image: firstImageForCategory(c.key),
     desc: categoryBlurbs[c.key] ?? "Premium systems sized for Canadian homes.",
   }));
+
 
 
   return (
@@ -174,7 +174,7 @@ export default async function Home() {
             </Link>
           </div>
 
-          <div className="mt-6 grid gap-4 sm:grid-cols-2 md:grid-cols-3">
+          <div className="mt-6 grid gap-6 sm:grid-cols-2 md:grid-cols-3">
             {categoryCards.map((c) => (
               <CategoryCard
                 key={c.key}
@@ -185,6 +185,7 @@ export default async function Home() {
               />
             ))}
           </div>
+
         </Container>
       </Section>
 
