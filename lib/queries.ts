@@ -25,6 +25,7 @@ export const categoriesQuery = groq`
 `;
 
 
+
 export const productProjection = `
   _id,
   title,

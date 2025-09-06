@@ -24,9 +24,13 @@ export const metadata = {
 };
 
 type Cat = {
+  _id?: string;
   title: string;
   slug?: { current?: string } | string;
+  thumbnail?: any;       // from Sanity
+  blurb?: string;        // from Sanity
 };
+
 
 function toCategoryHref(slugish: Cat["slug"]) {
   const s = typeof slugish === "string" ? slugish : slugish?.current;
