@@ -1,6 +1,12 @@
 import { groq } from "next-sanity";
-import { client } from "./sanity.client";
 import { createClient } from "@sanity/client";
+
+const client = createClient({
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
+  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || "production",
+  apiVersion: "2025-01-01",
+  useCdn: true,
+});
 
 const CATEGORY_TITLES = [
   "Chemical Removal",
@@ -65,23 +71,51 @@ export async function getAllProducts() {
 }
 
 // Get a single product by slug with common fields used on the PDP
+// One product (detail page)
 export async function getProductBySlug(slug: string) {
-  return client.fetch(
-    `*[_type == "product" && slug.current == $slug][0]{
-      _id,
-      title,
-      slug,
-      heroImage,
-      gallery,
-      features,
-      specs,
-      documents[]{title, file, url},
-      category->{title, slug},
-      brand->{title, slug}
-    }`,
-    { slug }
-  );
+  const query = `*[_type == "product" && slug.current == $slug][0]{
+    _id,
+    title,
+    "slug": slug.current,
+    // images we may use
+    heroImage,
+    mainImage,
+    image,
+    images,
+    gallery,
+    // category for breadcrumb + related
+    category->{title, "slug": slug.current},
+
+    // TEXT
+    description,            // short text (if you use it)
+    longDescription,        // <-- portable text array
+
+    // TABS
+    features[],             // array<string>
+    specs[]{label, value},  // array<{label,value}>
+    brochure{asset},        // file
+    downloads[]{title, file{asset}},
+
+    // use this to exclude this product from "related"
+    _id
+  }`;
+  return client.fetch(query, { slug });
 }
+
+// Siblings in the same category (for the scroller)
+export async function getRelatedProducts(categorySlug: string, excludeId: string) {
+  const query = `*[_type == "product" 
+    && defined(category.slug.current) 
+    && category.slug.current == $cat
+    && _id != $id][0...12]{
+      _id, title, "slug": slug.current,
+      // small image for the card
+      heroImage, mainImage, image, images[0], gallery[0],
+      category->{title, "slug": slug.current}
+  }`;
+  return client.fetch(query, { cat: categorySlug, id: excludeId });
+}
+
 
 
 

@@ -3,9 +3,9 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getProductBySlug } from "@/lib/queries";
 import { urlFor } from "@/lib/sanityImage"; // ensure this helper exists/works
-import { useState } from "react";
 import ProductTabs from "@/components/product/ProductTabs";
-
+import { getRelatedProducts } from "@/lib/queries";
+import ProductGallery from "@/components/product/ProductGallery";
 
 export const revalidate = 60;
 
@@ -30,12 +30,35 @@ function firstImageLike(p: any) {
     );
 }
 
+// Helper to collect all images into an array
+function allImages(p: any) {
+    const arr: any[] = [];
+    if (p?.heroImage) arr.push(p.heroImage);
+    if (p?.mainImage) arr.push(p.mainImage);
+    if (p?.image) arr.push(p.image);
+    if (Array.isArray(p?.images)) arr.push(...p.images);
+    if (Array.isArray(p?.gallery)) arr.push(...p.gallery);
+    // Remove duplicates (by _key or _id if available)
+    const seen = new Set();
+    return arr.filter(img => {
+        const key = img?._key || img?._id || JSON.stringify(img);
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return !!img;
+    });
+}
+
 export default async function ProductDetailPage({ params }: { params: { slug: string } }) {
     const product = await getProductBySlug(params.slug);
     if (!product) return notFound();
 
-    const mainImg = firstImageLike(product);
-    const mainUrl = mainImg ? urlFor(mainImg).width(900).height(700).fit("max").url() : null;
+    const related =
+        product?.category?.slug
+            ? await getRelatedProducts(product.category.slug, product._id)
+            : [];
+
+    // Get all images
+    const images = allImages(product);
 
     const brochureUrl =
         product?.brochure?.asset?._ref
@@ -59,7 +82,6 @@ export default async function ProductDetailPage({ params }: { params: { slug: st
                         <span>Category: {product.category.title}</span>
                     )}
                 </div>
-
                 {brochureUrl && (
                     <div className="mt-3">
                         <a
@@ -76,42 +98,37 @@ export default async function ProductDetailPage({ params }: { params: { slug: st
 
             {/* Main layout */}
             <div className="grid gap-8 lg:grid-cols-12">
-                {/* LEFT: image (auto-hide if missing) */}
+                {/* LEFT: image gallery */}
                 <div className="lg:col-span-6">
-                    {mainUrl ? (
-                        <div className="relative w-full rounded-xl border bg-white shadow-sm overflow-hidden">
-                            {/* keep height sane, no massive empty box */}
-                            <div className="relative aspect-[4/3] md:aspect-[3/2]">
-                                <Image
-                                    src={mainUrl}
-                                    alt={product.title}
-                                    fill
-                                    className="object-contain"
-                                    sizes="(max-width: 768px) 100vw, 50vw"
-                                    priority
-                                />
-                            </div>
-                        </div>
-                    ) : (
-                        <div className="rounded-xl border bg-gray-50 p-8 text-center text-sm text-gray-500">
-                            No image
-                        </div>
-                    )}
+                    <ProductGallery images={images} title={product.title} />
                 </div>
 
                 {/* RIGHT: tabs ABOVE the contact card */}
                 <div className="lg:col-span-6 flex flex-col gap-6">
                     {/* Tabs (restyled component below) */}
                     <section>
-
                         <ProductTabs
-                            description={product.description}
+                            descriptionBlocks={product.longDescription} // <-- rich text
                             features={product.features}
                             specs={product.specs}
-                            documents={product.downloads?.map((d: any) => ({
-                                title: d.title || "Download",
-                                url: d?.file?.asset?._ref ? fileRefToCdnUrl(d.file.asset._ref) : null,
-                            }))}
+                            documents={[
+                                // include brochure first if present
+                                ...(product?.brochure?.asset?._ref
+                                    ? [
+                                        {
+                                            title: "Brochure (PDF)",
+                                            url: fileRefToCdnUrl(product.brochure.asset._ref),
+                                        },
+                                    ]
+                                    : []),
+                                // then any downloads
+                                ...(product?.downloads?.length
+                                    ? product.downloads.map((d: any) => ({
+                                        title: d.title || "Download",
+                                        url: d?.file?.asset?._ref ? fileRefToCdnUrl(d.file.asset._ref) : null,
+                                    }))
+                                    : []),
+                            ]}
                         />
                     </section>
 
@@ -130,16 +147,63 @@ export default async function ProductDetailPage({ params }: { params: { slug: st
                             </Link>
                         </div>
                     </section>
-                    
-
                 </div>
-            </div>
+            </div> {/* <-- This is the end of your main grid */}
+            
+            {/* RELATED PRODUCTS */}
+            {related?.length > 0 && (
+                <section className="mx-auto mt-12 max-w-7xl">
+                    <h2 className="mb-4 text-lg font-semibold text-[#0D1B2A]">
+                        More in {product.category?.title}
+                    </h2>
+                    <div className="relative -mx-4 px-4">
+                        <div className="flex gap-4 overflow-x-auto pb-2">
+                            {related.map((r: any) => {
+                                const img =
+                                    r.heroImage ?? r.mainImage ?? r.image ?? r.images ?? r.gallery ?? null;
+                                const imgUrl = img ? urlFor(img).width(300).height(220).fit("max").url() : null;
+
+                                return (
+                                    <Link
+                                        key={r._id}
+                                        href={`/product/${r.slug}`}
+                                        className="min-w-[240px] max-w-[240px] flex-shrink-0 rounded-xl border bg-white shadow-sm hover:shadow-md transition"
+                                    >
+                                        <div className="relative aspect-[4/3] w-full overflow-hidden rounded-t-xl bg-gray-50">
+                                            {imgUrl ? (
+                                                <Image
+                                                    src={imgUrl}
+                                                    alt={r.title}
+                                                    fill
+                                                    className="object-contain"
+                                                    sizes="240px"
+                                                />
+                                            ) : (
+                                                <div className="flex h-full w-full items-center justify-center rounded-t-xl bg-gray-100 text-gray-400">
+                                                    No image
+                                                </div>
+                                            )}
+                                        </div>
+
+                                        <div className="p-4">
+                                            <h3 className="text-sm font-semibold text-[#0D1B2A] line-clamp-1">
+                                                {r.title}
+                                            </h3>
+                                            {r.price && (
+                                                <p className="mt-1 text-lg font-bold text-[#0D1B2A]">
+                                                    ${r.price}
+                                                </p>
+                                            )}
+                                        </div>
+                                    </Link>
+                                );
+                            })}
+                        </div>
+                    </div>
+                </section>
+            )}
         </article>
     );
 }
-
-
-
-type DocLink = { title: string; url: string | null };
 
 
