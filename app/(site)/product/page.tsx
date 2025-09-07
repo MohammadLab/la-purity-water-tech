@@ -1,4 +1,4 @@
-// app/(site)/products/page.tsx
+// app/(site)/product/page.tsx
 import { Suspense } from "react";
 import { getAllProducts, getAllCategories } from "@/lib/queries";
 import ProductGrid from "@/components/product/ProductGrid";
@@ -6,11 +6,8 @@ import Container from "@/components/ui/Container";
 import Section from "@/components/ui/Section";
 import CategoryFilters from "@/components/product/CategoryFilters";
 
-
-
 export const revalidate = 60;
 
-// Read categories from URL (?categories=slug,slug2)
 function parseSelected(searchParams: { [k: string]: string | string[] | undefined }) {
   const raw = searchParams?.categories;
   if (!raw) return [];
@@ -18,35 +15,31 @@ function parseSelected(searchParams: { [k: string]: string | string[] | undefine
   return list.split(",").map((s) => s.trim()).filter(Boolean);
 }
 
-export default async function ProductsPage({
+export default async function ProductIndex({
   searchParams,
 }: {
   searchParams?: { [k: string]: string | string[] | undefined };
 }) {
   const [allProducts, allCategories] = await Promise.all([
     getAllProducts(),
-    getAllCategories?.() ?? [], // keep working if helper not present yet
+    getAllCategories?.() ?? [],
   ]);
 
   const selected = parseSelected(searchParams ?? {});
   const selectedSet = new Set(selected);
 
-  // Filter server-side (simple). If none selected => show all.
   const products = Array.isArray(allProducts)
     ? allProducts.filter((p: any) => {
-      if (selected.length === 0) return true;
-      const catSlugish =
-        p?.category?.slug?.current ?? p?.category?.slug ?? p?.category ?? p?.categorySlug;
-      const catSlug = typeof catSlugish === "string" ? catSlugish : catSlugish?.current;
-      return catSlug ? selectedSet.has(catSlug) : false;
-    })
+        if (selected.length === 0) return true;
+        const catSlugish =
+          p?.category?.slug?.current ?? p?.category?.slug ?? p?.category ?? p?.categorySlug;
+        const catSlug = typeof catSlugish === "string" ? catSlugish : catSlugish?.current;
+        return catSlug ? selectedSet.has(catSlug) : false;
+      })
     : [];
 
   return (
-
-
     <Section className="py-10">
-
       <Container className="max-w-7xl">
         <div className="flex items-center justify-between gap-4">
           <h1 className="text-2xl md:text-3xl font-semibold">Products</h1>
@@ -55,7 +48,6 @@ export default async function ProductsPage({
           </div>
         </div>
 
-        {/* Filter bar (client) */}
         <div className="mt-6">
           <Suspense>
             <CategoryFilters
@@ -68,7 +60,6 @@ export default async function ProductsPage({
           </Suspense>
         </div>
 
-        {/* Grid */}
         <div className="mt-8">
           <ProductGrid products={products} />
         </div>

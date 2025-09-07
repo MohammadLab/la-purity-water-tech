@@ -66,27 +66,23 @@ export async function getAllProducts() {
 
 // Get a single product by slug with common fields used on the PDP
 export async function getProductBySlug(slug: string) {
-  const query = `
-    *[_type == "product" && slug.current == $slug][0]{
+  return client.fetch(
+    `*[_type == "product" && slug.current == $slug][0]{
       _id,
       title,
-      "slug": slug.current,
-      category->{title, "slug": slug.current},
-      images[]{..., asset->},
-      // The following fields may be PortableText, string, arrays, or null
-      description,
+      slug,
+      heroImage,
+      gallery,
       features,
       specs,
-      documents[]{
-        _key,
-        title,
-        file{asset->{url}},
-        url
-      }
-    }
-  `;
-  return client.fetch(query, { slug });
+      documents[]{title, file, url},
+      category->{title, slug},
+      brand->{title, slug}
+    }`,
+    { slug }
+  );
 }
+
 
 
 export async function getAllBrands() {

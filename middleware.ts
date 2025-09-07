@@ -2,6 +2,8 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
+
+
 // Only category slugs go here (adjust to match your Sanity categories)
 const CATEGORY_SLUGS = new Set([
   "water-softeners",
@@ -24,6 +26,10 @@ export function middleware(req: NextRequest) {
   if (pathname.startsWith("/products/")) {
     const parts = pathname.split("/").filter(Boolean); // ["products", "<slug>"]
     const slug = parts[1] || "";
+    if (pathname.startsWith("/products/")) {
+      const slug = pathname.replace("/products/", "");
+      return NextResponse.rewrite(new URL(`/product/${slug}`, req.url));
+    }
 
     // If slug is a known category → redirect to /products?categories=<slug>
     if (CATEGORY_SLUGS.has(slug)) {
