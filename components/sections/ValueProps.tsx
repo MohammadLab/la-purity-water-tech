@@ -10,28 +10,7 @@ import Section from "@/components/ui/Section";
  */
 export default function ValueProps() {
   return (
-    <Section className="relative overflow-hidden py-16 md:py-20">
-      {/* Ambient gradient glow */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 -z-20 bg-[radial-gradient(1200px_400px_at_50%_-10%,rgba(0,194,255,0.10),transparent_60%)]"
-      />
-
-      {/* Decorative top wave */}
-      <svg
-        aria-hidden
-        className="absolute -top-10 left-1/2 -z-10 h-24 w-[1400px] -translate-x-1/2 text-cyan-200/25"
-        viewBox="0 0 1400 96"
-        preserveAspectRatio="none"
-        fill="currentColor"
-      >
-        <path d="M0 64c104-48 208-48 312 0s208 48 312 0 208-48 312 0 208 48 312 0v32H0V64z" />
-      </svg>
-
-      {/* Floating bubbles (very light) */}
-      <div aria-hidden className="absolute -z-10 right-[8%] top-10 h-24 w-24 rounded-full bg-cyan-200/20 blur-2xl" />
-      <div aria-hidden className="absolute -z-10 left-[10%] top-24 h-16 w-16 rounded-full bg-cyan-300/20 blur-xl" />
-      <div aria-hidden className="absolute -z-10 left-[40%] bottom-10 h-20 w-20 rounded-full bg-cyan-200/20 blur-xl" />
+    <Section className="relative overflow-hidden py-4 md:py-6 bg-transparent">
 
       <Container>
         {/* Title + sub */}
@@ -45,7 +24,7 @@ export default function ValueProps() {
         </div>
 
         {/* Cards */}
-        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           <Card
             icon={
               <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="1.5">
@@ -54,7 +33,7 @@ export default function ValueProps() {
             }
             title="Premium Components"
             text="Our systems are built only with high-grade tanks, valves, and filter media, ensuring durability and efficiency."
-            bullets={["Corrosion‑resistant tanks","Certified control valves","Long‑life resin and media"]}
+            bullets={["Corrosion‑resistant tanks", "Certified control valves", "Long‑life resin and media"]}
           />
 
           <Card
@@ -65,7 +44,7 @@ export default function ValueProps() {
             }
             title="Engineered for Canada"
             text="Every system is sized and configured with Canadian water profiles and climate in mind."
-            bullets={["Tested for hard municipal water","Winter‑ready designs","Optimized flow rates"]}
+            bullets={["Tested for hard municipal water", "Winter‑ready designs", "Optimized flow rates"]}
           />
 
           <Card
@@ -77,21 +56,11 @@ export default function ValueProps() {
             }
             title="Service & Support"
             text="We back every install with knowledgeable support, parts availability, and routine service."
-            bullets={["Responsive customer care","Stocked spare parts","Maintenance reminders"]}
+            bullets={["Responsive customer care", "Stocked spare parts", "Maintenance reminders"]}
           />
         </div>
       </Container>
 
-      {/* Bottom wave */}
-      <svg
-        aria-hidden
-        className="absolute -bottom-12 left-1/2 -z-10 h-24 w-[1400px] -translate-x-1/2 rotate-180 text-cyan-200/25"
-        viewBox="0 0 1400 96"
-        preserveAspectRatio="none"
-        fill="currentColor"
-      >
-        <path d="M0 64c104-48 208-48 312 0s208 48 312 0 208-48 312 0 208 48 312 0v32H0V64z" />
-      </svg>
     </Section>
   );
 }

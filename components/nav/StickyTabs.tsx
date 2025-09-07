@@ -35,17 +35,15 @@ export default function StickyTabs() {
     return () => obs.disconnect();
   }, []);
 
+  if (!visible) return null;
+
+  // Use fixed so it never pushes content; fade/slide in nicely.
   return (
     <div
-      className={`
-        sticky top-0 z-40
-        transition-all duration-200
-        ${visible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2 pointer-events-none"}
-      `}
-      aria-hidden={!visible}
+      className="fixed top-2 left-0 right-0 z-40 transition-all duration-200 opacity-100 translate-y-0"
+      role="region" aria-label="Sticky navigation"
     >
-      {/* No background bar — just center the same rounded TabsRow pill */}
-      <div className="mx-auto max-w-[1400px] px-4 py-2 flex justify-center">
+      <div className="mx-auto max-w-[1400px] px-4 flex justify-center">
         <TabsRow />
       </div>
     </div>

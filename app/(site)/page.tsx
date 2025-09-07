@@ -98,7 +98,7 @@ export default async function Home() {
 
     let image: string | null = null;
     if (c.thumbnail?.asset?._ref) {
-      image = urlFor(c.thumbnail).width(1200).height(300).fit("crop").url();
+      image = urlFor(c.thumbnail).width(500).height(500).fit("crop").url();
     } else {
       image = firstImageForCategory(slug);
     }
@@ -163,72 +163,109 @@ export default async function Home() {
       </section>
 
       {/* Sticky tabs (same style) that only appear after the hero leaves */}
+      {/* Sticky tabs */}
       <StickyTabs />
 
+      {/* Dark navy strip between hero and waves */}
+      <section className="relative h-12">
+        <div
+          aria-hidden
+          className="absolute inset-0 w-screen bg-[#0D1B2A]"
+        />
+      </section>
+
       {/* Fancy value props */}
-      <ValueProps />
 
 
-      {/* =====================================================================
-         Categories strip (6 cards)
-         ===================================================================== */}
-      <Section className="py-10">
-        <Container>
-          <div className="flex items-end justify-between">
-            <div>
-              <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-[#0D1B2A]">
-                Explore Categories
-              </h2>
-              <div
-                aria-hidden
-                className="mt-1 h-px w-24 rounded-full bg-gradient-to-r from-[#00C2FF]/40 via-[#00C2FF]/20 to-transparent"
-              />
+      {/* Fancy value props */}
+      {/* Fancy value props on a full-bleed waves background */}
+      <section className="relative">
+        {/* Full-bleed background (same blur/lightness as hero) */}
+        <div
+          aria-hidden
+          className="
+      absolute left-1/2 top-0 -translate-x-1/2
+      w-screen h-full
+    "
+        >
+          <div className="absolute inset-0 bg-[url('/images/waves-blue.jpg')] bg-cover bg-center" />
+          <div className="absolute inset-0 bg-white/65 backdrop-blur-[2px]" />
+        </div>
+
+        {/* Content above the background */}
+        <div className="relative z-10">
+          <ValueProps />
+        </div>
+      </section>
+
+
+
+      {/* ======================= CATEGORIES on light blue ======================= */}
+      <section className="relative">
+        {/* full-bleed light-blue just for CATEGORIES */}
+        <div aria-hidden className="absolute inset-0 w-full h-full" />
+        <Section className="py-10 relative z-10">
+          <Container>
+            <div className="flex items-end justify-between">
+              <div>
+                <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-[#0D1B2A]">
+                  Explore Categories
+                </h2>
+                <div
+                  aria-hidden
+                  className="mt-1 h-px w-24 rounded-full bg-gradient-to-r from-[#00C2FF]/40 via-[#00C2FF]/20 to-transparent"
+                />
+              </div>
             </div>
-          </div>
 
-          <div className="mt-6 grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 justify-items-center">
-
-            {categoryCards.map((c: any) => (
-              <CategoryCard
-                key={c.key}
-                title={c.title}
-                href={c.href}
-                imageUrl={c.image}
-                description={c.desc}
-              />
-            ))}
-
-          </div>
-
-        </Container>
-      </Section>
-
-
-      {/* =====================================================================
-         Featured Products grid
-         ===================================================================== */}
-      <Section className="py-12">
-        <Container>
-          <div className="flex items-end justify-between">
-            <div>
-              <h2 className="text-2xl md:3xl lg:text-3xl font-bold tracking-tight text-[#0D1B2A]">
-                Featured Products
-              </h2>
-              <div
-                aria-hidden
-                className="mt-1 h-px w-24 rounded-full bg-gradient-to-r from-[#00C2FF]/40 via-[#00C2FF]/20 to-transparent"
-              />
+            <div className="mt-6 grid gap-6 grid-cols-1 md:grid-cols-4 items-stretch">
+              {categoryCards.map((c: any) => (
+                <CategoryCard
+                  key={c.key}
+                  title={c.title}
+                  href={c.href}
+                  imageUrl={c.image}
+                  description={c.desc}
+                />
+              ))}
             </div>
-            <Link href="/products" className="text-sm font-semibold text-cyan-700 hover:underline">
-              View all →
-            </Link>
-          </div>
+          </Container>
+        </Section>
+      </section>
 
-          <div className="mt-6">
-            <ProductGrid products={featured} />
-          </div>
-        </Container>
-      </Section>
-    </main>
+      {/* ======================= FEATURED on dark blue ======================== */}
+      <section className="relative">
+        {/* full-bleed DARK BLUE from here down */}
+        <div
+          aria-hidden
+          className="absolute left-1/2 top-0 -z-0 -translate-x-1/2 w-screen h-full bg-[#003A78]"
+        />
+        <Section className="py-12 relative z-10">
+          <Container>
+            <div className="flex items-end justify-between">
+              <div>
+                <h2 className="text-2xl md:3xl lg:text-3xl font-bold tracking-tight text-white">
+                  Featured Products
+                </h2>
+                <div
+                  aria-hidden
+                  className="mt-1 h-px w-24 rounded-full bg-gradient-to-r from-white/40 via-white/20 to-transparent"
+                />
+              </div>
+              <Link href="/products" className="text-sm font-semibold text-cyan-200 hover:underline">
+                View all →
+              </Link>
+            </div>
+
+            <div className="mt-6">
+              <ProductGrid products={featured} />
+            </div>
+          </Container>
+        </Section>
+      </section>
+
+
+
+    </main >
   );
 }
