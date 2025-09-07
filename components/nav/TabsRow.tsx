@@ -1,41 +1,50 @@
 // components/nav/TabsRow.tsx
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
-// components/nav/TabsRow.tsx
-const toCat = (slug: string) => `/products?categories=${encodeURIComponent(slug)}`;
-
-const items = [
+const tabs = [
   { label: "Home", href: "/" },
   { label: "Products", href: "/products" },
-
-  // Category “shortcuts” (these should prefilter)
-  { label: "Water Softeners", href: toCat("water-softeners") },
-  { label: "UV", href: toCat("ultraviolet-uv") },
-  { label: "Chemical Removal", href: toCat("chemical-removal") },
-
   { label: "Resources", href: "/resources" },
   { label: "Contact", href: "/contact" },
 ];
 
+export default function TabsRow() {
+  const pathname = usePathname();
 
-export default function TabsRow({ className = "" }: { className?: string }) {
   return (
-    <nav
-      aria-label="Primary"
-      className={`
-        inline-flex flex-wrap items-center justify-center gap-x-6 gap-y-3
-        rounded-2xl bg-[#0D1B2A] px-4 py-3 text-sm font-medium text-white
-        ring-1 ring-black/5 shadow
-        ${className}
-      `}
-    >
-      <Link href="/" className="hover:text-cyan-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300">Home</Link>
-      <Link href="/products" className="hover:text-cyan-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300">Products</Link>
-      <Link href="/products/water-softeners" className="hover:text-cyan-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300">Water Softeners</Link>
-      <Link href="/products/uv" className="hover:text-cyan-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300">UV</Link>
-      <Link href="/products/chemical-removal" className="hover:text-cyan-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300">Chemical Removal</Link>
-      <Link href="/resources" className="hover:text-cyan-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300">Resources</Link>
-      <Link href="/contact" className="hover:text-cyan-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300">Contact</Link>
+    <nav aria-label="Primary" className="inline-flex">
+      <ul
+        className="
+          inline-flex items-center gap-1 rounded-full bg-white/90 px-2 py-1
+          text-sm shadow-sm ring-1 ring-black/5 backdrop-blur
+        "
+      >
+        {tabs.map((t) => {
+          const isActive =
+            t.href === "/"
+              ? pathname === "/"
+              : pathname === t.href || pathname.startsWith(`${t.href}/`);
+
+          return (
+            <li key={t.href}>
+              <Link
+                href={t.href}
+                className={[
+                  "inline-flex items-center rounded-full px-3 py-1.5 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500",
+                  isActive
+                    ? "bg-[#0D1B2A] text-white"
+                    : "text-[#0D1B2A] hover:bg-cyan-50",
+                ].join(" ")}
+              >
+                {t.label}
+              </Link>
+            </li>
+          );
+        })}
+      </ul>
     </nav>
   );
 }
