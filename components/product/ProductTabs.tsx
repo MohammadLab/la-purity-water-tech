@@ -13,104 +13,86 @@ export default function ProductTabs({
   specs = [],
   documents = [],
 }: {
-  descriptionBlocks?: any[];
-  features?: string[];
-  specs?: Spec[];
-  documents?: DocLink[];
+  descriptionBlocks?: any;           // Portable Text blocks
+  features?: string[];               // simple bullet strings
+  specs?: Spec[];                    // {label, value}
+  documents?: DocLink[];             // {title, url}
 }) {
-  const tabs = ["Description", "Features", "Specs", "Documents"] as const;
-  const [active, setActive] = useState<(typeof tabs)[number]>("Description");
+  // Compute which tabs we actually have content for
+  const hasDescription = true;
+  const hasFeatures = Array.isArray(features) && features.length > 0;
+  const hasSpecs = Array.isArray(specs) && specs.length > 0;
+  const hasDocs = true;
+
+  const tabs = [
+    hasDescription && { key: "desc", label: "Description" },
+    hasFeatures && { key: "features", label: "Features" },
+    hasSpecs && { key: "specs", label: "Specs" },
+    hasDocs && { key: "docs", label: "Documents" },
+  ].filter(Boolean) as { key: string; label: string }[];
+
+  const [active, setActive] = useState(tabs[0]?.key ?? "desc");
+
+  if (tabs.length === 0) return null;
 
   return (
     <div className="rounded-xl border bg-white shadow-sm">
       {/* Tabs */}
-      <div className="flex gap-6 px-4 pt-3">
-        {tabs.map((t) => {
-          const on = t === active;
-          return (
-            <button
-              key={t}
-              onClick={() => setActive(t)}
-              className={[
-                "relative pb-3 text-sm font-medium transition-colors",
-                on ? "text-[#0D1B2A]" : "text-gray-500 hover:text-gray-800",
-              ].join(" ")}
-            >
-              {t}
-              <span
-                className={[
-                  "absolute left-0 right-0 -bottom-px h-[3px] rounded-full",
-                  on ? "bg-[#0D1B2A]" : "bg-transparent",
-                ].join(" ")}
-              />
-            </button>
-          );
-        })}
+      <div className="flex gap-6 border-b px-5 pt-4">
+        {tabs.map(t => (
+          <button
+            key={t.key}
+            onClick={() => setActive(t.key)}
+            className={`-mb-px border-b-2 pb-3 text-sm font-medium transition
+              ${active === t.key
+                ? "border-[#0D1B2A] text-[#0D1B2A]"
+                : "border-transparent text-gray-500 hover:text-[#0D1B2A] hover:border-[#0D1B2A]/40"
+              }`}
+          >
+            {t.label}
+          </button>
+        ))}
       </div>
-
-      <div className="h-px w-full bg-gray-200" />
 
       {/* Panels */}
       <div className="p-5">
-        {active === "Description" && (
-          <div className="prose max-w-none prose-p:my-2 prose-li:my-1 text-gray-800">
-            {descriptionBlocks?.length ? (
-              <PortableText value={descriptionBlocks} />
-            ) : (
-              <p>No description available.</p>
-            )}
+        {active === "desc" && hasDescription && (
+          <div className="prose max-w-none">
+            <PortableText value={descriptionBlocks} />
           </div>
         )}
 
-        {active === "Features" && (
+        {active === "features" && hasFeatures && (
           <ul className="list-disc pl-5 space-y-1 text-gray-800">
-            {features?.length ? (
-              features.map((f, i) => <li key={i}>{f}</li>)
-            ) : (
-              <li>No features listed.</li>
-            )}
+            {features.map((f, i) => <li key={i}>{f}</li>)}
           </ul>
         )}
 
-        {active === "Specs" && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            {specs?.length ? (
-              specs.map((s, i) => (
-                <div key={i} className="flex justify-between rounded-lg border p-2 text-sm">
-                  <span className="font-medium text-gray-700">{s.label}</span>
-                  <span className="text-gray-900">{s.value}</span>
-                </div>
-              ))
-            ) : (
-              <div className="text-sm text-gray-600">No specs available.</div>
-            )}
+        {active === "specs" && hasSpecs && (
+          <div className="grid gap-3 sm:grid-cols-2">
+            {specs.map((s, i) => (
+              <div key={i} className="flex justify-between rounded border px-3 py-2">
+                <span className="font-medium">{s.label}</span>
+                <span className="text-gray-700">{s.value}</span>
+              </div>
+            ))}
           </div>
         )}
 
-        {active === "Documents" && (
+        {active === "docs" && hasDocs && (
           <ul className="space-y-2">
-            {documents?.length ? (
-              documents.map((d, i) =>
-                d.url ? (
-                  <li key={i}>
-                    <Link
-                      href={d.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center rounded-lg border px-3 py-2 text-sm font-medium text-[#0D1B2A] hover:bg-gray-50"
-                    >
-                      {d.title}
-                    </Link>
-                  </li>
-                ) : (
-                  <li key={i} className="text-sm text-gray-500">
-                    {d.title}
-                  </li>
-                )
-              )
-            ) : (
-              <li className="text-sm text-gray-600">No documents available.</li>
-            )}
+            {documents.filter(d => d?.url).map((d, i) => (
+              <li key={i}>
+                <Link
+                  href={d.url!}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center rounded bg-[#0D1B2A] px-3 py-1.5 text-sm text-white hover:bg-[#0b1420]"
+                >
+                  {d.title || "Download"}
+                </Link>
+              </li>
+            ))}
           </ul>
         )}
       </div>

@@ -73,34 +73,28 @@ export async function getAllProducts() {
 // Get a single product by slug with common fields used on the PDP
 // One product (detail page)
 export async function getProductBySlug(slug: string) {
-  const query = `*[_type == "product" && slug.current == $slug][0]{
-    _id,
-    title,
-    "slug": slug.current,
-    // images we may use
-    heroImage,
-    mainImage,
-    image,
-    images,
-    gallery,
-    // category for breadcrumb + related
-    category->{title, "slug": slug.current},
-
-    // TEXT
-    description,            // short text (if you use it)
-    longDescription,        // <-- portable text array
-
-    // TABS
-    features[],             // array<string>
-    specs[]{label, value},  // array<{label,value}>
-    brochure{asset},        // file
-    downloads[]{title, file{asset}},
-
-    // use this to exclude this product from "related"
-    _id
-  }`;
-  return client.fetch(query, { slug });
+  return client.fetch(
+    `*[_type == "product" && slug.current == $slug][0]{
+      _id,
+      title,
+      slug,
+      category->{title, slug},
+      heroImage,
+      mainImage,
+      image,
+      images[],
+      gallery[],
+      brochure,
+      downloads[]{title, file},
+      features[],
+      specs[]{label, value},
+      longDescription[]    // <-- add this
+    }`,
+    { slug }
+  );
 }
+
+
 
 // Siblings in the same category (for the scroller)
 export async function getRelatedProducts(categorySlug: string, excludeId: string) {

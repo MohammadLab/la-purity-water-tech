@@ -82,18 +82,7 @@ export default async function ProductDetailPage({ params }: { params: { slug: st
                         <span>Category: {product.category.title}</span>
                     )}
                 </div>
-                {brochureUrl && (
-                    <div className="mt-3">
-                        <a
-                            href={brochureUrl}
-                            className="inline-block rounded bg-[#0D1B2A] px-4 py-2 text-white hover:bg-[#0b1420]"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            Download Brochure
-                        </a>
-                    </div>
-                )}
+
             </header>
 
             {/* Main layout */}
@@ -108,11 +97,10 @@ export default async function ProductDetailPage({ params }: { params: { slug: st
                     {/* Tabs (restyled component below) */}
                     <section>
                         <ProductTabs
-                            descriptionBlocks={product.longDescription} // <-- rich text
+                            descriptionBlocks={product.longDescription} // or whatever your description field is
                             features={product.features}
                             specs={product.specs}
                             documents={[
-                                // include brochure first if present
                                 ...(product?.brochure?.asset?._ref
                                     ? [
                                         {
@@ -149,7 +137,7 @@ export default async function ProductDetailPage({ params }: { params: { slug: st
                     </section>
                 </div>
             </div> {/* <-- This is the end of your main grid */}
-            
+
             {/* RELATED PRODUCTS */}
             {related?.length > 0 && (
                 <section className="mx-auto mt-12 max-w-7xl">
