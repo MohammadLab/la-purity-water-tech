@@ -9,6 +9,8 @@ import StickyTabs from "@/components/nav/StickyTabs";
 import ValueProps from "@/components/sections/ValueProps";
 import CategoryCard from "@/components/category/CategoryCard";
 import { urlFor } from "@/lib/sanityImage"; // add this at top
+import SiteHero from "@/components/hero/SiteHero";
+
 
 
 
@@ -113,97 +115,40 @@ export default async function Home() {
 
   return (
     <main className="min-h-screen bg-white text-gray-900">
-      {/* =====================================================================
-         HERO (full-bleed banner; same 'hero as a section' tactic)
-         ===================================================================== */}
-      <section
-        id="hero" // ← StickyTabs watches this sentinel
-        className="
-          relative isolate
-          w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]
-          bg-no-repeat bg-cover bg-center
-        "
-        style={{ backgroundImage: "url('/images/hero-blue.jpg')" }}
-      >
-        {/* blue vibe: soft dim + slight blur so text stays readable */}
-        <div className="absolute inset-0 bg-white/65 backdrop-blur-[2px]" />
-
-        {/* Inner content stays centered in a max width container */}
-        <div className="relative z-10 mx-auto max-w-[1400px] px-4 py-16 md:py-24 text-center">
-          {/* Large circular logo (optional — comment if you prefer only text) */}
-          <div
-            className="
-    mx-auto relative 
-    w-[200px] h-[200px] sm:w-[240px] sm:h-[240px] md:w-[280px] md:h-[280px]
-  "
-          >
-            <Image
-              src="/logo-lapurity-circle.png"
-              alt="LaPurity Water Tech Inc."
-              fill
-              sizes="(max-width: 768px) 240px, 280px"
-              className="object-contain"
-              priority
-            />
-          </div>
-
-
-          {/* Headline + subhead */}
-          <h1 className="mt-6 text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#0D1B2A]">
-            Residential Water Softening, Filtration, &amp; Purification Solutions
-          </h1>
-          <p className="mt-3 text-base sm:text-lg text-gray-700">
-            Proud Canadian provider of premium whole-home water treatment systems.
-          </p>
-
-          {/* Tabs row inside the hero (like Excalibur’s strip) */}
-          <div className="mt-8">
-            <TabsRow />
-          </div>
-        </div>
-      </section>
-
-      {/* Sticky tabs (same style) that only appear after the hero leaves */}
-      {/* Sticky tabs */}
+      {/* ========================== HERO ========================== */}
+      <SiteHero />
+      {/* Sticky tabs only after hero leaves viewport */}
       <StickyTabs />
+
+      {/* Sticky tabs (only after hero scrolls out) */}
+
 
       {/* Dark navy strip between hero and waves */}
       <section className="relative h-12">
-        <div
-          aria-hidden
-          className="absolute inset-0 w-screen bg-[#0D1B2A]"
-        />
+        <div aria-hidden className="absolute inset-0 w-screen bg-[#0D1B2A]" />
       </section>
 
-      {/* Fancy value props */}
-
-
-      {/* Fancy value props */}
-      {/* Fancy value props on a full-bleed waves background */}
+      {/* ========================== VALUE PROPS ========================== */}
       <section className="relative">
-        {/* Full-bleed background (same blur/lightness as hero) */}
+        {/* Full-bleed waves BG + blur */}
         <div
           aria-hidden
           className="
-      absolute left-1/2 top-0 -translate-x-1/2
-      w-screen h-full
-    "
+          absolute left-1/2 top-0 -translate-x-1/2
+          w-screen h-full
+        "
         >
           <div className="absolute inset-0 bg-[url('/images/waves-blue.jpg')] bg-cover bg-center" />
           <div className="absolute inset-0 bg-white/65 backdrop-blur-[2px]" />
         </div>
 
-        {/* Content above the background */}
         <div className="relative z-10">
           <ValueProps />
         </div>
       </section>
 
-
-
-      {/* ======================= CATEGORIES on light blue ======================= */}
+      {/* ========================== CATEGORIES ========================== */}
       <section className="relative">
-        {/* full-bleed light-blue just for CATEGORIES */}
         <div aria-hidden className="absolute inset-0 w-full h-full" />
         <Section className="py-10 relative z-10">
           <Container>
@@ -234,9 +179,8 @@ export default async function Home() {
         </Section>
       </section>
 
-      {/* ======================= FEATURED on dark blue ======================== */}
+      {/* ========================== FEATURED ========================== */}
       <section className="relative">
-        {/* full-bleed DARK BLUE from here down */}
         <div
           aria-hidden
           className="absolute left-1/2 top-0 -z-0 -translate-x-1/2 w-screen h-full bg-[#003A78]"
@@ -253,7 +197,10 @@ export default async function Home() {
                   className="mt-1 h-px w-24 rounded-full bg-gradient-to-r from-white/40 via-white/20 to-transparent"
                 />
               </div>
-              <Link href="/products" className="text-sm font-semibold text-cyan-200 hover:underline">
+              <Link
+                href="/products"
+                className="text-sm font-semibold text-cyan-200 hover:underline"
+              >
                 View all →
               </Link>
             </div>
@@ -264,9 +211,7 @@ export default async function Home() {
           </Container>
         </Section>
       </section>
-
-
-
-    </main >
+    </main>
   );
+
 }

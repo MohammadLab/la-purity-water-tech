@@ -8,3 +8,14 @@ html, body {
 body {
   @apply antialiased;
 }
+
+/* Hero background switcher: desktop vs mobile */
+.hero-bg {
+  background-image: url("/images/hero-blue.jpg");
+}
+
+@media (max-width: 768px) {
+  .hero-bg {
+    background-image: url("/images/hero-mobile.png");
+  }
+}

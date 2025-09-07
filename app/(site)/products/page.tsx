@@ -6,6 +6,8 @@ import Container from "@/components/ui/Container";
 import Section from "@/components/ui/Section";
 import CategoryFilters from "@/components/product/CategoryFilters";
 
+
+
 export const revalidate = 60;
 
 // Read categories from URL (?categories=slug,slug2)
@@ -32,16 +34,19 @@ export default async function ProductsPage({
   // Filter server-side (simple). If none selected => show all.
   const products = Array.isArray(allProducts)
     ? allProducts.filter((p: any) => {
-        if (selected.length === 0) return true;
-        const catSlugish =
-          p?.category?.slug?.current ?? p?.category?.slug ?? p?.category ?? p?.categorySlug;
-        const catSlug = typeof catSlugish === "string" ? catSlugish : catSlugish?.current;
-        return catSlug ? selectedSet.has(catSlug) : false;
-      })
+      if (selected.length === 0) return true;
+      const catSlugish =
+        p?.category?.slug?.current ?? p?.category?.slug ?? p?.category ?? p?.categorySlug;
+      const catSlug = typeof catSlugish === "string" ? catSlugish : catSlugish?.current;
+      return catSlug ? selectedSet.has(catSlug) : false;
+    })
     : [];
 
   return (
+
+
     <Section className="py-10">
+
       <Container className="max-w-7xl">
         <div className="flex items-center justify-between gap-4">
           <h1 className="text-2xl md:text-3xl font-semibold">Products</h1>

@@ -2,25 +2,20 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import TabsRow from "@/components/nav/TabsRow";
 
-/**
- * Shows the same home-page tabs bar (rounded pill) for all non-home routes.
- * - Dark navy strip
- * - Centered TabsRow pill
- * - Sticky at top (like a normal header)
- */
 export default function GlobalHeader() {
   const pathname = usePathname();
+  if (pathname === "/") return null; // home draws its own strip
 
-  // Home already has the in-hero tabs + StickyTabs behavior.
-  if (pathname === "/") return null;
-
+  // Full-bleed navy strip directly under the hero
   return (
-    <header className="sticky top-0 z-50 bg-[#0D1B2A]">
-      <div className="mx-auto max-w-[1400px] px-4 py-3 flex justify-center">
-        <TabsRow />
-      </div>
-    </header>
+    <div
+      aria-hidden
+      className="
+        relative
+        w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]
+        h-12 bg-[#0D1B2A]
+      "
+    />
   );
 }
