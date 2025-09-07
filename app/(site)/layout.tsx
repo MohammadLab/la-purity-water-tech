@@ -4,19 +4,18 @@
 import type { ReactNode } from "react";
 import { usePathname } from "next/navigation";
 import "@/styles/globals.css";
-import Navbar from "@/components/layout/Navbar";
+import GlobalHeader from "@/components/nav/GlobalHeader";
 import Footer from "@/components/layout/Footer";
 
 
 export default function SiteLayout({ children }: { children: ReactNode }) {
   const pathname = usePathname();
-  const showHeader = pathname !== "/";
-  const isHome = pathname === "/";
+
 
   return (
     <div className="min-h-screen flex flex-col">
-      {showHeader && <Navbar />}
-      <main className="flex-1 mx-auto w-full max-w-12xl ">{children}</main>
+      <GlobalHeader />
+      <main className="flex-1 w-full">{children}</main>
       <Footer />
     </div>
   );

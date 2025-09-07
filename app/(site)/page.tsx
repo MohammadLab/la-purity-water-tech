@@ -133,9 +133,9 @@ export default async function Home() {
           {/* Large circular logo (optional — comment if you prefer only text) */}
           <div
             className="
-              mx-auto relative rounded-full bg-white/95 p-5 shadow-xl ring-1 ring-black/5
-              w-[200px] h-[200px] sm:w-[240px] sm:h-[240px] md:w-[280px] md:h-[280px]
-            "
+    mx-auto relative 
+    w-[200px] h-[200px] sm:w-[240px] sm:h-[240px] md:w-[280px] md:h-[280px]
+  "
           >
             <Image
               src="/logo-lapurity-circle.png"
@@ -146,6 +146,7 @@ export default async function Home() {
               priority
             />
           </div>
+
 
           {/* Headline + subhead */}
           <h1 className="mt-6 text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#0D1B2A]">
