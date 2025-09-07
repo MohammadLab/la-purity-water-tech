@@ -1,5 +1,6 @@
 import { groq } from "next-sanity";
 import { client } from "./sanity.client";
+import { createClient } from "@sanity/client";
 
 const CATEGORY_TITLES = [
   "Chemical Removal",
@@ -63,9 +64,30 @@ export async function getAllProducts() {
   return client.fetch(groq`*[_type=="product"]{${productProjection}} | order(title asc)`);
 }
 
+// Get a single product by slug with common fields used on the PDP
 export async function getProductBySlug(slug: string) {
-  return client.fetch(groq`*[_type=="product" && slug.current==$slug][0]{${productProjection}}`, { slug });
+  const query = `
+    *[_type == "product" && slug.current == $slug][0]{
+      _id,
+      title,
+      "slug": slug.current,
+      category->{title, "slug": slug.current},
+      images[]{..., asset->},
+      // The following fields may be PortableText, string, arrays, or null
+      description,
+      features,
+      specs,
+      documents[]{
+        _key,
+        title,
+        file{asset->{url}},
+        url
+      }
+    }
+  `;
+  return client.fetch(query, { slug });
 }
+
 
 export async function getAllBrands() {
   return client.fetch(groq`*[_type=="brand"]{_id, title, "slug": slug.current} | order(title asc)`);
@@ -92,3 +114,4 @@ export const productsByBrandSlugGroq = groq`
 export async function getProductsByBrandSlug(slug: string) {
   return client.fetch(productsByBrandSlugGroq, { slug });
 }
+

@@ -1,39 +1,43 @@
 // middleware.ts
-import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
+
+// Only category slugs go here (adjust to match your Sanity categories)
+const CATEGORY_SLUGS = new Set([
+  "water-softeners",
+  "chemical-removal",
+  "iron-sulphur-manganese",
+  "tannin",
+  "ultraviolet-uv",
+  "whole-home-filtration",
+  "scale-control-systems",
+  "smart-connect-ecosystem",
+  "ph-neutralizing",
+  "hybrid-multi-contaminant",
+]);
 
 export function middleware(req: NextRequest) {
-  const url = req.nextUrl.clone();
-  const { pathname } = url;
+  const url = new URL(req.url);
+  const { pathname, search } = url;
 
-  // Match /products/<slug> (but not /products itself)
-  // e.g. /products/water-softeners  ->  /products?categories=water-softeners
-  const m = pathname.match(/^\/products\/([^/]+)\/?$/);
-  if (m) {
-    const slugFromPath = m[1];
+  // Only consider /products/<slug>
+  if (pathname.startsWith("/products/")) {
+    const parts = pathname.split("/").filter(Boolean); // ["products", "<slug>"]
+    const slug = parts[1] || "";
 
-    // Start from current URL to preserve any existing query params
-    const params = url.searchParams;
-
-    // Merge with existing categories param (multi-select friendly)
-    const existing = params.get("categories");
-    const set = new Set((existing ?? "").split(",").filter(Boolean));
-    set.add(slugFromPath);
-
-    params.set("categories", Array.from(set).join(","));
-
-    // Redirect to canonical /products?categories=...
-    url.pathname = "/products";
-    url.search = params.toString();
-
-    // 308 preserves method/body on POST if ever used
-    return NextResponse.redirect(url, 308);
+    // If slug is a known category → redirect to /products?categories=<slug>
+    if (CATEGORY_SLUGS.has(slug)) {
+      const to = new URL("/products", req.url);
+      const sp = new URLSearchParams(search);
+      sp.set("categories", slug);
+      to.search = sp.toString();
+      return NextResponse.redirect(to); // or NextResponse.rewrite(to) if you prefer
+    }
   }
 
   return NextResponse.next();
 }
 
-// Ensure middleware runs for any /products/* path
 export const config = {
   matcher: ["/products/:path*"],
 };
