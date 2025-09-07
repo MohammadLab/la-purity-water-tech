@@ -1,39 +1,39 @@
+// middleware.ts
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-function unauthorized() {
-  return new NextResponse("Authentication required.", {
-    status: 401,
-    headers: { "WWW-Authenticate": 'Basic realm="Secure Area"' }
-  });
-}
-
 export function middleware(req: NextRequest) {
-  const auth = req.headers.get("authorization");
-  const user = process.env.BASIC_USER || "";
-  const pass = process.env.BASIC_PASS || "";
+  const url = req.nextUrl.clone();
+  const { pathname } = url;
 
-  if (!auth || !auth.startsWith("Basic ")) {
-    return unauthorized();
-  }
+  // Match /products/<slug> (but not /products itself)
+  // e.g. /products/water-softeners  ->  /products?categories=water-softeners
+  const m = pathname.match(/^\/products\/([^/]+)\/?$/);
+  if (m) {
+    const slugFromPath = m[1];
 
-  const b64 = auth.split(" ")[1] || "";
-  let decoded = "";
-  try {
-    decoded = Buffer.from(b64, "base64").toString("utf8");
-  } catch {
-    return unauthorized();
-  }
+    // Start from current URL to preserve any existing query params
+    const params = url.searchParams;
 
-  const [u, p] = decoded.split(":");
-  if (u !== user || p !== pass) {
-    return unauthorized();
+    // Merge with existing categories param (multi-select friendly)
+    const existing = params.get("categories");
+    const set = new Set((existing ?? "").split(",").filter(Boolean));
+    set.add(slugFromPath);
+
+    params.set("categories", Array.from(set).join(","));
+
+    // Redirect to canonical /products?categories=...
+    url.pathname = "/products";
+    url.search = params.toString();
+
+    // 308 preserves method/body on POST if ever used
+    return NextResponse.redirect(url, 308);
   }
 
   return NextResponse.next();
 }
 
-// Only run on Studio routes
+// Ensure middleware runs for any /products/* path
 export const config = {
-  matcher: ["/studio/:path*"]
+  matcher: ["/products/:path*"],
 };

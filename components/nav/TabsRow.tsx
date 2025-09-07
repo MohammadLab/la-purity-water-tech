@@ -1,6 +1,23 @@
 // components/nav/TabsRow.tsx
 import Link from "next/link";
 
+// components/nav/TabsRow.tsx
+const toCat = (slug: string) => `/products?categories=${encodeURIComponent(slug)}`;
+
+const items = [
+  { label: "Home", href: "/" },
+  { label: "Products", href: "/products" },
+
+  // Category “shortcuts” (these should prefilter)
+  { label: "Water Softeners", href: toCat("water-softeners") },
+  { label: "UV", href: toCat("ultraviolet-uv") },
+  { label: "Chemical Removal", href: toCat("chemical-removal") },
+
+  { label: "Resources", href: "/resources" },
+  { label: "Contact", href: "/contact" },
+];
+
+
 export default function TabsRow({ className = "" }: { className?: string }) {
   return (
     <nav

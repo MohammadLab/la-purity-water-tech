@@ -11,10 +11,6 @@ import CategoryCard from "@/components/category/CategoryCard";
 import { urlFor } from "@/lib/sanityImage"; // add this at top
 import SiteHero from "@/components/hero/SiteHero";
 
-
-
-
-
 // Revalidate content every 60s (ISR)
 export const revalidate = 60;
 
@@ -34,10 +30,12 @@ type Cat = {
 };
 
 
+// app/(site)/page.tsx
 function toCategoryHref(slugish: Cat["slug"]) {
   const s = typeof slugish === "string" ? slugish : slugish?.current;
-  return s ? `/products/${s}` : "/products";
+  return s ? `/products?categories=${encodeURIComponent(s)}` : "/products";
 }
+
 
 export default async function Home() {
   // Data: featured products + categories
