@@ -72,35 +72,40 @@ export default function ProductGallery({ images, title }: Props) {
           <div
             className="
               flex flex-col gap-3 items-center
-              max-h-[560px] overflow-hidden
+              max-h-[560px] overflow--y-auto
             "
           >
             {safeImages.map((img, idx) => (
               <button
-                key={img._key || img._id || idx}
-                className={[
-                  "rounded-xl border bg-white shadow-sm flex items-center justify-center focus:outline-none",
-                  idx === active
-                    ? "ring-2 ring-blue-500"
-                    : "hover:ring-2 hover:ring-blue-300",
-                ].join(" ")}
-                style={{
-                  width: 72,
-                  height: 72,
-                  padding: 6,
-                  flex: "0 0 auto",
-                }}
-                onClick={() => setActive(idx)}
-                aria-label={`Show image ${idx + 1}`}
-              >
-                <Image
-                  src={imgUrl(img, 200, 200)}
-                  alt={title + " thumbnail"}
-                  width={64}
-                  height={64}
-                  className="object-contain"
-                />
-              </button>
+  key={img._key || img._id || idx}
+  className={[
+    "box-border rounded-xl border bg-white shadow-sm",
+    "flex items-center justify-center",
+    "focus:outline-none focus-visible:outline-none",
+    // Highlight styles
+    idx === active
+      ? "ring-2 ring-inset ring-[#0D1B2A] border-[#0D1B2A]"
+      : "hover:border-gray-300",
+  ].join(" ")}
+  style={{
+    width: 84,       // give the thumbnail a comfortable box
+    height: 84,
+    padding: 10,
+    flex: "0 0 auto",
+    overflow: "visible", // ensure nothing gets clipped
+  }}
+  onClick={() => setActive(idx)}
+  aria-label={`Show image ${idx + 1}`}
+>
+  <Image
+    src={imgUrl(img, 200, 200)}
+    alt={`${title} thumbnail ${idx + 1}`}
+    width={64}
+    height={64}
+    className="object-contain pointer-events-none select-none"
+  />
+</button>
+
             ))}
           </div>
         )}
