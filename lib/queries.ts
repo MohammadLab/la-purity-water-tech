@@ -1,7 +1,8 @@
+// lib/queries.ts
 import { groq } from "next-sanity";
 import { createClient } from "@sanity/client";
 
-const client = createClient({
+export const client = createClient({
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || "production",
   apiVersion: "2025-01-01",
@@ -19,6 +20,8 @@ const CATEGORY_TITLES = [
   "Ultraviolet (UV)",
   "Water Softeners",
   "Whole Home Filtration",
+  // NEW
+  "Reverse Osmosis System",
 ];
 
 export const categoriesQuery = groq`
@@ -30,8 +33,6 @@ export const categoriesQuery = groq`
     blurb
   } | order(title asc)
 `;
-
-
 
 export const productProjection = `
   _id,
@@ -49,13 +50,13 @@ export const productProjection = `
 `;
 
 export const allCategoriesGroq = groq`
-*[_type == "category"]{ _id, title, "slug": slug.current } | order(title asc)
+  *[_type == "category"]{ _id, title, "slug": slug.current } | order(title asc)
 `;
 
 export const productsByCategoryGroq = groq`
-*[_type == "product" && category->slug.current == $category]{
-  ${productProjection}
-} | order(title asc)
+  *[_type == "product" && category->slug.current == $category]{
+    ${productProjection}
+  } | order(title asc)
 `;
 
 export async function getAllCategories() {
@@ -67,10 +68,11 @@ export async function getProductsByCategory(category: string) {
 }
 
 export async function getAllProducts() {
-  return client.fetch(groq`*[_type=="product"]{${productProjection}} | order(title asc)`);
+  return client.fetch(
+    groq`*[_type=="product"]{${productProjection}} | order(title asc)`
+  );
 }
 
-// Get a single product by slug with common fields used on the PDP
 // One product (detail page)
 export async function getProductBySlug(slug: string) {
   return client.fetch(
@@ -94,8 +96,6 @@ export async function getProductBySlug(slug: string) {
   );
 }
 
-
-
 // Siblings in the same category (for the scroller)
 export async function getRelatedProducts(opts: {
   currentSlug: string;
@@ -104,70 +104,76 @@ export async function getRelatedProducts(opts: {
 }) {
   const { currentSlug, categorySlug, limit = 12 } = opts;
 
+  // Fast path if we already know the category slug
   if (categorySlug) {
     return client.fetch(
-      `*[_type == "product" 
-         && slug.current != $currentSlug
-         && defined(category->slug.current) 
-         && category->slug.current == $cat
-       ] | order(title asc)[0...$limit]{
-         _id,
-         title,
-         "slug": slug.current,
-         category->{title, "slug": slug.current},
-         heroImage,
-         gallery,
-         description
-       }`,
+      `*[
+        _type == "product" &&
+        slug.current != $currentSlug &&
+        defined(category->slug.current) &&
+        category->slug.current == $cat
+      ] | order(title asc)[0...$limit]{
+        _id,
+        title,
+        "slug": slug.current,
+        category->{title, "slug": slug.current},
+        heroImage,
+        gallery,
+        description
+      }`,
       { currentSlug, cat: categorySlug, limit }
     );
   }
 
+  // Fallback: resolve the category ref of the current product, then match by that ref
+  const catRef = await client.fetch<string | null>(
+    `*[_type == "product" && slug.current == $slug][0].category._ref`,
+    { slug: currentSlug }
+  );
+
+  if (!catRef) return [];
+
   return client.fetch(
-    `let cat = *[_type == "product" && slug.current == $currentSlug][0].category->slug.current
-     *[_type == "product" 
-        && slug.current != $currentSlug
-        && defined(category->slug.current) 
-        && category->slug.current == cat
-     ] | order(title asc)[0...$limit]{
-       _id,
-       title,
-       "slug": slug.current,
-       category->{title, "slug": slug.current},
-       heroImage,
-       gallery,
-       description
-     }`,
-    { currentSlug, limit }
+    `*[
+      _type == "product" &&
+      slug.current != $currentSlug &&
+      category._ref == $catRef
+    ] | order(title asc)[0...$limit]{
+      _id,
+      title,
+      "slug": slug.current,
+      category->{title, "slug": slug.current},
+      heroImage,
+      gallery,
+      description
+    }`,
+    { currentSlug, catRef, limit }
   );
 }
 
-
-
-
 export async function getAllBrands() {
-  return client.fetch(groq`*[_type=="brand"]{_id, title, "slug": slug.current} | order(title asc)`);
+  return client.fetch(
+    groq`*[_type=="brand"]{_id, title, "slug": slug.current} | order(title asc)`
+  );
 }
 
 // --- Brand lookups ---
 export const brandBySlugGroq = groq`
-*[_type == "brand" && slug.current == $slug][0]{
-  _id, title, "slug": slug.current, description, logo
-}
+  *[_type == "brand" && slug.current == $slug][0]{
+    _id, title, "slug": slug.current, description, logo
+  }
 `;
 
 export async function getBrandBySlug(slug: string) {
   return client.fetch(brandBySlugGroq, { slug });
 }
 
-// Already mentioned in your backend notes; adding here for the frontend:
 export const productsByBrandSlugGroq = groq`
-*[_type == "product" && brand->slug.current == $slug]{
-  ${productProjection}
-} | order(title asc)
+  *[_type == "product" && brand->slug.current == $slug]{
+    ${productProjection}
+  } | order(title asc)
 `;
 
 export async function getProductsByBrandSlug(slug: string) {
   return client.fetch(productsByBrandSlugGroq, { slug });
 }
-
