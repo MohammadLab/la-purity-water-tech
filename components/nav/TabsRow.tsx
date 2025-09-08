@@ -7,9 +7,27 @@ import { usePathname } from "next/navigation";
 const tabs = [
   { label: "Home", href: "/" },
   { label: "Products", href: "/products" },
-  { label: "Resources", href: "/resources" },
+  { label: "About", href: "/about" },   // ← was "Resources"
   { label: "Contact", href: "/contact" },
 ];
+
+
+// Treat /product and /products as equivalent (because of your rewrite)
+function matches(pathname: string, href: string) {
+  const p = pathname;
+  if (href === "/") return p === "/";
+
+  const eq = (a: string, b: string) => a === b || a.startsWith(`${b}/`);
+
+  if (href === "/products") {
+    return (
+      eq(p, "/products") ||
+      eq(p, "/product")
+    );
+  }
+
+  return eq(p, href);
+}
 
 export default function TabsRow() {
   const pathname = usePathname();
@@ -23,10 +41,7 @@ export default function TabsRow() {
         "
       >
         {tabs.map((t) => {
-          const isActive =
-            t.href === "/"
-              ? pathname === "/"
-              : pathname === t.href || pathname.startsWith(`${t.href}/`);
+          const isActive = matches(pathname, t.href);
 
           return (
             <li key={t.href}>
@@ -34,9 +49,7 @@ export default function TabsRow() {
                 href={t.href}
                 className={[
                   "inline-flex items-center rounded-full px-3 py-1.5 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500",
-                  isActive
-                    ? "bg-[#0D1B2A] text-white"
-                    : "text-[#0D1B2A] hover:bg-cyan-50",
+                  isActive ? "bg-[#0D1B2A] text-white" : "text-[#0D1B2A] hover:bg-cyan-50",
                 ].join(" ")}
               >
                 {t.label}
