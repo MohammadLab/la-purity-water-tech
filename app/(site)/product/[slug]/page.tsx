@@ -117,6 +117,17 @@ export default async function ProductDetailPage({
 
         {/* RIGHT: tabs ABOVE the contact card */}
         <div className="lg:col-span-6 flex flex-col gap-6">
+          {/* CTA: Request a Quote */}
+          <div className="mt-4">
+            <Link
+              href="/contact"
+              className="inline-flex items-center rounded-full bg-cyan-700 px-4 py-2 text-white shadow-sm hover:bg-cyan-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500"
+              aria-label="Request a Quote"
+            >
+              Request a Quote
+            </Link>
+          </div>
+
           {/* Tabs */}
           <section>
             <ProductTabs
