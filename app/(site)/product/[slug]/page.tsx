@@ -97,7 +97,7 @@ export default async function ProductDetailPage({ params }: { params: { slug: st
                     {/* Tabs (restyled component below) */}
                     <section>
                         <ProductTabs
-                            descriptionBlocks={product.longDescription} // or whatever your description field is
+                            descriptionBlocks={product.description}  // <- string now
                             features={product.features}
                             specs={product.specs}
                             documents={[

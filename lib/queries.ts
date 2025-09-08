@@ -88,7 +88,7 @@ export async function getProductBySlug(slug: string) {
       downloads[]{title, file},
       features[],
       specs[]{label, value},
-      longDescription[]    // <-- add this
+      description
     }`,
     { slug }
   );
