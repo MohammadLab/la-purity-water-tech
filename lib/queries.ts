@@ -97,17 +97,49 @@ export async function getProductBySlug(slug: string) {
 
 
 // Siblings in the same category (for the scroller)
-export async function getRelatedProducts(categorySlug: string, excludeId: string) {
-  const query = `*[_type == "product" 
-    && defined(category.slug.current) 
-    && category.slug.current == $cat
-    && _id != $id][0...12]{
-      _id, title, "slug": slug.current,
-      // small image for the card
-      heroImage, mainImage, image, images[0], gallery[0],
-      category->{title, "slug": slug.current}
-  }`;
-  return client.fetch(query, { cat: categorySlug, id: excludeId });
+export async function getRelatedProducts(opts: {
+  currentSlug: string;
+  categorySlug?: string;
+  limit?: number;
+}) {
+  const { currentSlug, categorySlug, limit = 12 } = opts;
+
+  if (categorySlug) {
+    return client.fetch(
+      `*[_type == "product" 
+         && slug.current != $currentSlug
+         && defined(category->slug.current) 
+         && category->slug.current == $cat
+       ] | order(title asc)[0...$limit]{
+         _id,
+         title,
+         "slug": slug.current,
+         category->{title, "slug": slug.current},
+         heroImage,
+         gallery,
+         description
+       }`,
+      { currentSlug, cat: categorySlug, limit }
+    );
+  }
+
+  return client.fetch(
+    `let cat = *[_type == "product" && slug.current == $currentSlug][0].category->slug.current
+     *[_type == "product" 
+        && slug.current != $currentSlug
+        && defined(category->slug.current) 
+        && category->slug.current == cat
+     ] | order(title asc)[0...$limit]{
+       _id,
+       title,
+       "slug": slug.current,
+       category->{title, "slug": slug.current},
+       heroImage,
+       gallery,
+       description
+     }`,
+    { currentSlug, limit }
+  );
 }
 
 

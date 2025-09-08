@@ -6,7 +6,7 @@ import { urlFor } from "@/lib/sanityImage";
 
 /** Build a URL for Sanity images and gracefully support SVGs on the files API */
 function imgUrl(img: any, w = 1200, h = 1200) {
-  // SVGs come through the files endpoint (sanity image pipeline won’t rasterize them)
+  // SVGs unchanged
   if (img?.asset?.extension === "svg" || img?.asset?._ref?.includes("svg")) {
     if (img?.asset?.url) return img.asset.url;
     const ref = img?.asset?._ref || "";
@@ -16,8 +16,12 @@ function imgUrl(img: any, w = 1200, h = 1200) {
     const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || "production";
     return `https://cdn.sanity.io/files/${projectId}/${dataset}/${fileId}.svg`;
   }
-  return urlFor(img).width(w).height(h).fit("max").url();
+
+  // ⬇️ Use the ASSET, not the image object => ignores crop/hotspot
+  const source = img?.asset || img;
+  return urlFor(source).width(w).height(h).fit("max").url();
 }
+
 
 type Props = {
   images: any[];          // heroImage first if you want, then gallery[]

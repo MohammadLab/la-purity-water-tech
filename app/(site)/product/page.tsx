@@ -40,7 +40,7 @@ export default async function ProductIndex({
 
   return (
     <Section className="py-10">
-      <Container className="max-w-7xl">
+      <Container className="max-w-screen-2xl">
         <div className="flex items-center justify-between gap-4">
           <h1 className="text-2xl md:text-3xl font-semibold">Products</h1>
           <div className="text-sm text-gray-500">
