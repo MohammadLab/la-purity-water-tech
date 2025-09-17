@@ -33,17 +33,24 @@ export default function AboutPage() {
             <div className="relative grid gap-8 p-8 md:grid-cols-12 md:p-12">
               <div className="md:col-span-7 lg:col-span-8">
                 <p className="text-xs font-medium uppercase tracking-wider text-cyan-700">
-                  Windsor • Southwestern Ontario
+                  Your Trusted Partner for Residential, Commercial, and Industrial Water Treatment
                 </p>
                 <h1 className="mt-2 text-3xl font-semibold leading-tight text-[#0D1B2A] md:text-4xl">
-                  A vendor you can trust for <span className="underline decoration-cyan-600/40">whole-home water treatment</span>
+                  LaPurity Water Tech
                 </h1>
                 <p className="mt-3 max-w-2xl text-gray-700">
-                  LaPurity Water Tech is a local vendor and stocking partner for
-                  <span className="font-medium"> Excalibur Water Systems</span>. We’re not the
-                  manufacturer — we help you translate water problems into a clear system plan,
-                  coordinate delivery, and support your equipment for the long run.
+                  LaPurity Water Tech is your local partner and stocking source for{" "}
+                  <span className="font-medium">Excalibur Water Systems</span>, a leading
+                  manufacturer of premium water treatment solutions. We proudly serve all cities
+                  across Southern Ontario — and even extend our expertise to the eastern regions
+                  of Michigan. Our team helps you solve water problems with the right solution plan,
+                  provides professional on-site installation and maintenance, ensures fast and
+                  reliable delivery, and supports your system for years to come.
                 </p>
+                <p className="mt-3 max-w-2xl font-medium text-gray-800">
+                  Take the first step toward cleaner, safer water today.
+                </p>
+
 
                 <div className="mt-5 flex flex-wrap items-center gap-3">
                   <Link
@@ -217,29 +224,6 @@ export default function AboutPage() {
               Clear system plan, genuine equipment, delivery coordination, and ongoing help with
               maintenance and performance.
             </Card>
-          </div>
-        </Container>
-      </Section>
-
-      {/* TESTIMONIALS (lightweight) */}
-      <Section className="py-10">
-        <Container className="max-w-6xl">
-          <div className="rounded-2xl border bg-white p-6 shadow-sm ring-1 ring-black/5">
-            <h2 className="mb-4 text-2xl font-semibold text-[#0D1B2A]">What homeowners say</h2>
-            <div className="grid gap-4 md:grid-cols-3">
-              <Quote
-                text="Our well water had iron and a sulfur smell. LaPurity sized a system that actually worked — stains are gone and the house doesn’t smell."
-                who="Amherstburg homeowner"
-              />
-              <Quote
-                text="They explained options clearly and didn’t oversell. Install was straightforward and support has been easy."
-                who="Windsor family"
-              />
-              <Quote
-                text="We switched from a big-box unit that kept failing. The Excalibur setup has been solid and easy to maintain."
-                who="Kingsville couple"
-              />
-            </div>
           </div>
         </Container>
       </Section>
