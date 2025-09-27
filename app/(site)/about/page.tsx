@@ -44,8 +44,8 @@ export default function AboutPage() {
                   manufacturer of premium water treatment solutions. We proudly serve all cities
                   across Southern Ontario — and even extend our expertise to the eastern regions
                   of Michigan. Our team helps you solve water problems with the right solution plan,
-                  provides professional on-site installation and maintenance, ensures fast and reliable delivery, 
-                  including free delivery across Windsor–Essex, Lakeshore, Tecumseh, LaSalle, Amherstburg, Kingsville, 
+                  provides professional on-site installation and maintenance, ensures fast and reliable delivery,
+                  including free delivery across Windsor–Essex, Lakeshore, Tecumseh, LaSalle, Amherstburg, Kingsville,
                   Leamington, Essex, Belle River, Lakeshore, and Sarnia–Lambton, and supports your system for years to come.
                 </p>
                 <p className="mt-3 max-w-2xl font-medium text-gray-800">
@@ -104,15 +104,15 @@ export default function AboutPage() {
             <div className="space-y-6 lg:col-span-7">
               <h2 className="text-3xl font-semibold text-[#1E3A8A]">Our Company</h2>
               <p className="leading-relaxed text-gray-700">
-                We’re a Windsor-based team with one job: help you get the right water system for your home and water. 
-                That means reviewing test data, sizing to real flow rates, selecting the correct media/resins, 
-                and making sure everything is understandable for your installer. After installation, we remain your 
+                We’re a Windsor-based team with one job: help you get the right water system for your home and water.
+                That means reviewing test data, sizing to real flow rates, selecting the correct media/resins,
+                and making sure everything is understandable for your installer. After installation, we remain your
                 first call for maintenance schedules, performance checks, and warranty guidance.
               </p>
               <p className="leading-relaxed text-gray-700">
-                Our systems cover all kinds of softening, filtration, purification, disinfection, pH neutralization 
-                and harmful chemical removal. Our designs are robust and serviceable — parts and media are available, 
-                and many models carry strong limited warranty. We help you keep those systems in spec so you actually 
+                Our systems cover all kinds of softening, filtration, purification, disinfection, pH neutralization
+                and harmful chemical removal. Our designs are robust and serviceable — parts and media are available,
+                and many models carry strong limited warranty. We help you keep those systems in spec so you actually
                 benefit from that coverage.
               </p>
             </div>
@@ -175,8 +175,9 @@ export default function AboutPage() {
             <div className="mb-6 text-center">
               <h2 className="text-3xl font-semibold text-[#0D1B2A]">Request a Quote</h2>
               <p className="mt-2 text-gray-700">
-                Tell us about your water and your home. We’ll reply with a clear system plan —
-                model recommendations, sizing notes, and next steps.
+                Your water deserves better. Share your water concerns for your home or business with us,
+                and we’ll provide the right solution — with clear recommendations, fair pricing, and expert
+                guidance. We’ll deliver a customized plan.
               </p>
             </div>
             <QuoteForm />
