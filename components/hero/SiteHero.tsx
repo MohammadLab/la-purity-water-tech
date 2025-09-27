@@ -40,7 +40,7 @@ export default function SiteHero() {
           aria-hidden="true"
         >
           <div
-            className="h-40 sm:h-48 md:h-56 lg:h-64 w-[100%] max-w-[10000px] rounded-full translate-y-[50%]"
+            className="h-40 sm:h-48 md:h-56 lg:h-64 w-[100%] max-w-[10000px] rounded-full translate-y-[40%]"
             style={{
               background:
                 "radial-gradient(ellipse at center, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.50) 35%, rgba(0,0,0,0.28) 60%, rgba(0, 0, 0, 0) 75%)",
