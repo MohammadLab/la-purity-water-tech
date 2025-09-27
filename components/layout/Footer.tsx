@@ -33,7 +33,7 @@ export default function Footer() {
               <div className="mt-3 space-y-2 text-sm/6 text-white/80">
                 <p>
                   <span className="block font-medium text-white/90">Address</span>
-                  <span>Windsor, ON, Canada</span>
+                  <span>3324 Marentette Ave, Windsor, ON, Canada</span>
                 </p>
                 <p>
                   <span className="block font-medium text-white/90">Phone</span>
@@ -41,9 +41,18 @@ export default function Footer() {
                     (226) 340-7900
                   </a>
                 </p>
+                <p className="text-white/80">
+                  <span className="block font-medium text-white/90">Email</span>
+                  <Link
+                    href="mailto:olabak.lapurity@gmail.com"
+                    className="hover:text-white hover:underline break-all"
+                  >
+                    olabak.lapurity@gmail.com
+                  </Link>
+                </p>
                 <p>
-                  
-                  
+
+
                 </p>
               </div>
             </div>

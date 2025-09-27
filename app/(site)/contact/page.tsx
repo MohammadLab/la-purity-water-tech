@@ -38,7 +38,7 @@ export default function ContactPage() {
                 <ul className="mt-2 space-y-2 text-sm text-gray-700">
                   <li className="flex items-center gap-2">
                     <Mail size={16} className="text-cyan-700" />
-                    <a href="mailto:contact@your-domain.ca" className="underline">contact@your-domain.ca</a>
+                    <a href="mailto:olabak.lapurity@gmail.com" className="underline">olabak.lapurity@gmail.com</a>
                   </li>
                   <li className="flex items-center gap-2">
                     <Phone size={16} className="text-cyan-700" />

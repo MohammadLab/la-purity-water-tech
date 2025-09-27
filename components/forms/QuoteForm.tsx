@@ -61,7 +61,7 @@ export default function QuoteForm() {
             required
             autoComplete="email"
             className="w-full rounded-lg border px-3 py-2 shadow-sm ring-1 ring-black/5 focus:outline-none focus:ring-2 focus:ring-cyan-600"
-            placeholder="you@example.com"
+            placeholder="olabak.lapurity@gmail.com"
           />
         </div>
 
