@@ -40,14 +40,16 @@ export default function SiteHero() {
           aria-hidden="true"
         >
           <div
-            className="h-60 sm:h-48 md:h-56 lg:h-64 w-[100%] max-w-[2000px] rounded-full translate-y-[50%]"
+            className="h-40 sm:h-48 md:h-56 lg:h-64 w-[100%] max-w-[10000px] rounded-full translate-y-[50%]"
             style={{
               background:
-                "radial-gradient(ellipse 120% 70% at 50% 50%, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.35) 40%, rgba(0,0,0,0.0) 75%)",
-              filter: "blur(2px)",
+                "radial-gradient(ellipse at center, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.50) 35%, rgba(0,0,0,0.28) 60%, rgba(0, 0, 0, 0) 75%)",
+              filter: "blur(3px)",
             }}
           />
         </div>
+
+
 
         {/* Actual content */}
         <div className="relative z-10">
