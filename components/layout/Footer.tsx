@@ -6,10 +6,7 @@ import Container from "@/components/ui/Container";
 const NAV = [
   { label: "Home", href: "/" },
   { label: "Products", href: "/products" },
-  { label: "Water Softeners", href: "/products/water-softeners" },
-  { label: "UV", href: "/products/uv" },
-  { label: "Chemical Removal", href: "/products/chemical-removal" },
-  { label: "Resources", href: "/resources" },
+  { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
 ];
 

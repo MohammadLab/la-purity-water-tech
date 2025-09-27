@@ -20,8 +20,9 @@ export default function ContactPage() {
           <div className="text-center">
             <h1 className="text-3xl font-semibold text-[#0D1B2A]">Request a Quote</h1>
             <p className="mx-auto mt-2 max-w-2xl text-gray-700">
-              Tell us about your water and your home. We’ll reply with a clear system plan —
-              model recommendations, sizing notes, and next steps.
+              Your water deserves better. Share your water concerns for your home or business with us, 
+              and we’ll provide the right solution — with clear recommendations, fair pricing, and expert guidance. 
+              We’ll deliver a customized plan.
             </p>
           </div>
 
