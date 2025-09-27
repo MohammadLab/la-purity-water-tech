@@ -38,9 +38,9 @@ function toCategoryHref(slugish: Cat["slug"]) {
 
 
 export default async function Home() {
-  // Data: featured products + categories
+
   const products = await getAllProducts();
-  const featured = Array.isArray(products) ? products.slice(0, 6) : [];
+
 
   let categories: Array<{ title: string; href: string; key: string }> = [];
   try {
@@ -177,38 +177,7 @@ export default async function Home() {
         </Section>
       </section>
 
-      {/* ========================== FEATURED ========================== */}
-      <section className="relative">
-        <div
-          aria-hidden
-          className="absolute left-1/2 top-0 -z-0 -translate-x-1/2 w-screen h-full bg-[#003A78]"
-        />
-        <Section className="py-12 relative z-10">
-          <Container>
-            <div className="flex items-end justify-between">
-              <div>
-                <h2 className="text-2xl md:3xl lg:text-3xl font-bold tracking-tight text-white">
-                  Featured Products
-                </h2>
-                <div
-                  aria-hidden
-                  className="mt-1 h-px w-24 rounded-full bg-gradient-to-r from-white/40 via-white/20 to-transparent"
-                />
-              </div>
-              <Link
-                href="/products"
-                className="text-sm font-semibold text-cyan-200 hover:underline"
-              >
-                View all →
-              </Link>
-            </div>
-
-            <div className="mt-6">
-              <ProductGrid products={featured} />
-            </div>
-          </Container>
-        </Section>
-      </section>
+      
     </main>
   );
 
