@@ -59,9 +59,20 @@ export const productsByCategoryGroq = groq`
   } | order(title asc)
 `;
 
+// lib/queries.ts
 export async function getAllCategories() {
-  return client.fetch(categoriesQuery, { titles: CATEGORY_TITLES });
+  return client.fetch(`
+    *[_type == "category"] 
+      | order(coalesce(order, 9999) asc, title asc) {
+        _id,
+        title,
+        "slug": slug.current,
+        thumbnail,
+        blurb
+      }
+  `);
 }
+
 
 export async function getProductsByCategory(category: string) {
   return client.fetch(productsByCategoryGroq, { category });
