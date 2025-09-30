@@ -69,7 +69,7 @@ export default function SiteHero() {
           </Link>
 
           <h1 className="mt-6 text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white">
-            Residential Water Softening, Filtration, &amp; Purification Solutions
+            Water Softening, Filtration, &amp; Purification Solutions
           </h1>
           <p className="mt-3 text-base sm:text-lg text-white/90">
             Proud Canadian provider of premium whole-home water treatment systems.
