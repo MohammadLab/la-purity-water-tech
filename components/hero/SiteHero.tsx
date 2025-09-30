@@ -49,8 +49,6 @@ export default function SiteHero() {
           />
         </div>
 
-
-
         {/* Actual content */}
         <div className="relative z-10">
           <Link
@@ -70,6 +68,10 @@ export default function SiteHero() {
 
           <h1 className="mt-6 text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white">
             Water Softening, Filtration, &amp; Purification Solutions
+            <br />
+            <span className="block text-xl sm:text-2xl md:text-3xl font-semibold mt-2 text-white/90">
+              Residential &ndash; Commercial &ndash; Industrial
+            </span>
           </h1>
           <p className="mt-3 text-base sm:text-lg text-white/90">
             Proud Canadian provider of premium whole-home water treatment systems.
@@ -80,7 +82,6 @@ export default function SiteHero() {
           </div>
         </div>
       </div>
-
     </section>
   );
 }
