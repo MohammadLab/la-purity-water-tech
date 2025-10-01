@@ -40,6 +40,7 @@ export const productProjection = `
   "slug": slug.current,
   "brand": brand->{title, "slug": slug.current},
   "category": category->{title, "slug": slug.current},
+  "secondaryCategory": secondaryCategory->{title, "slug": slug.current},
   description,
   features,
   specs,
@@ -49,15 +50,20 @@ export const productProjection = `
   downloads
 `;
 
+
 export const allCategoriesGroq = groq`
   *[_type == "category"]{ _id, title, "slug": slug.current } | order(title asc)
 `;
 
 export const productsByCategoryGroq = groq`
-  *[_type == "product" && category->slug.current == $category]{
+  *[_type == "product" && (
+    category->slug.current == $category ||
+    secondaryCategory->slug.current == $category
+  )]{
     ${productProjection}
   } | order(title asc)
 `;
+
 
 // lib/queries.ts
 export async function getAllCategories() {
