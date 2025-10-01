@@ -94,6 +94,12 @@ export default defineType({
       to: [{ type: "category" }],
     }),
     defineField({
+      name: "secondaryCategory",
+      title: "Secondary Category",
+      type: "reference",
+      to: [{ type: "category" }],
+    }),
+    defineField({
       name: "heroImage",
       title: "Hero Image",
       type: "image",

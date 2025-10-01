@@ -54,10 +54,19 @@ export default async function ProductIndex({
   const products = Array.isArray(allProducts)
     ? allProducts.filter((p: any) => {
       // category filter
-      const catSlugish =
+      const mainSlugish =
         p?.category?.slug?.current ?? p?.category?.slug ?? p?.category ?? p?.categorySlug;
-      const catSlug = typeof catSlugish === "string" ? catSlugish : catSlugish?.current;
-      const passesCategory = selected.length === 0 ? true : catSlug ? selectedSet.has(catSlug) : false;
+      const mainSlug = typeof mainSlugish === "string" ? mainSlugish : mainSlugish?.current;
+
+      const secondarySlugish =
+        p?.secondaryCategory?.slug?.current ?? p?.secondaryCategory?.slug ?? p?.secondaryCategory;
+      const secondarySlug = typeof secondarySlugish === "string" ? secondarySlugish : secondarySlugish?.current;
+
+      const passesCategory =
+        selected.length === 0
+          ? true
+          : (mainSlug && selectedSet.has(mainSlug)) || (secondarySlug && selectedSet.has(secondarySlug));
+
 
       // search filter
       const passesQuery = matchesQuery(p);
