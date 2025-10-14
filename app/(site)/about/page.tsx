@@ -39,18 +39,22 @@ export default function AboutPage() {
                   LaPurity Water Tech
                 </h1>
                 <p className="mt-3 max-w-2xl text-gray-700">
-                  LaPurity Water Tech is your local partner and stocking source for{" "}
-                  <span className="font-medium">Excalibur Water Systems</span>, a leading
-                  manufacturer of premium water treatment solutions. We proudly serve all cities
-                  across Southern Ontario — and even extend our expertise to the eastern regions
-                  of Michigan. Our team helps you solve water problems with the right solution plan,
-                  provides professional on-site installation and maintenance, ensures fast and reliable delivery,
-                  including free delivery across Windsor–Essex, Lakeshore, Tecumseh, LaSalle, Amherstburg, Kingsville,
-                  Leamington, Essex, Belle River, Lakeshore, and Sarnia–Lambton, and supports your system for years to come.
-                </p>
-                <p className="mt-3 max-w-2xl font-medium text-gray-800">
-                  Take the first step toward cleaner, safer water today.
-                </p>
+  LaPurity Water Tech is your local partner and stocking source for{" "}
+  <span className="font-medium">Excalibur Water Systems</span>, a leading
+  manufacturer of premium water treatment solutions. We proudly serve all cities
+  across Southern Ontario — and even extend our expertise to the eastern regions
+  of Michigan. Our team helps you solve water problems with the right solution plan,
+  provides professional on-site installation and maintenance, and ensures fast, reliable
+  delivery — including <span className="font-medium">free delivery within 50 km of Windsor</span>,
+  covering Windsor–Essex, Lakeshore, Tecumseh, LaSalle, Amherstburg, Kingsville, Leamington,
+  Essex, and Belle River. For customers outside this area, such as Sarnia–Lambton and surrounding
+  regions, we offer affordable extended delivery options. We’re committed to supporting your system
+  for years to come.
+</p>
+<p className="mt-3 max-w-2xl font-medium text-gray-800">
+  Take the first step toward cleaner, safer water today.
+</p>
+
 
 
                 <div className="mt-5 flex flex-wrap items-center gap-3">
