@@ -47,7 +47,12 @@ export default function ContactPage() {
                   </li>
                   <li className="flex items-center gap-2">
                     <MapPin size={16} className="text-cyan-700" />
-                    <span>Windsor–Essex & Southwestern Ontario</span>
+                    <span>
+  3395 Howard Ave Unit #10
+  <br />
+  N9E 3N6 Windsor, ON, Canada
+</span>
+
                   </li>
                 </ul>
                 <div className="mt-4 text-sm text-gray-600">
