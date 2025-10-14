@@ -30,7 +30,12 @@ export default function Footer() {
               <div className="mt-3 space-y-2 text-sm/6 text-white/80">
                 <p>
                   <span className="block font-medium text-white/90">Address</span>
-                  <span>3395 Howard Ave Unit #10 N9E 3N6 Windsor, ON, Canada</span>
+                  <span>
+  3395 Howard Ave Unit #10
+  <br />
+  N9E 3N6 Windsor, ON, Canada
+              </span>
+
                 </p>
                 <p>
                   <span className="block font-medium text-white/90">Phone</span>
