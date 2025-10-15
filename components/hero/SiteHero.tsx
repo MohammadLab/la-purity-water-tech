@@ -21,58 +21,88 @@ export default function SiteHero() {
     <section
       id="hero"
       className={`
-    relative isolate
-    w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]
-    min-h-[60vh] sm:min-h-[70vh] overflow-hidden
-    bg-black
-  `}
+        relative isolate
+        w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]
+        min-h-[50vh] sm:min-h-[55vh] md:min-h-[60vh]
+        overflow-hidden
+        bg-black
+      `}
       aria-label="Site hero"
     >
-      {/* Slideshow background */}
+      {/* === Background slideshow === */}
       <HeroSlideshow images={SLIDES} intervalMs={5000} fadeMs={800} />
 
-      {/* Foreground content with dark transparent overlay */}
-      <div className="relative z-10 mx-auto max-w-[1400px] px-4 py-16 md:py-24 text-center">
-        {/* Overlay behind the content */}
-        {/* Soft oval dropfade directly behind the text */}
+      {/* === Logo (mobile-style position for all screens) === */}
+      <div
+        className="
+    absolute
+    top-[20px] sm:top-[60px] md:top-[40px]
+    left-[20px] sm:left-[40px] md:left-[60px]
+    z-20
+    w-[130px] sm:w-[150px] md:w-[180px]
+  "
+      >
+
+        <Link
+          href="/"
+          aria-label="Go to homepage"
+          className="block relative w-full h-full aspect-square"
+        >
+          <Image
+            src="/logo-lapurity-circle.png"
+            alt="LaPurity Water Tech Inc."
+            fill
+            sizes="(max-width: 768px) 130px, 160px, 180px"
+            className="object-contain"
+            priority
+          />
+        </Link>
+      </div>
+
+      {/* === Centered text === */}
+      <div
+        className="
+          relative z-10 mx-auto max-w-[1400px]
+          px-4 py-5 md:py-5
+          text-center flex flex-col items-center justify-end h-full
+        "
+      >
+        {/* Oval fade stays fixed in center */}
         <div
           className="pointer-events-none absolute inset-0 flex items-center justify-center"
           aria-hidden="true"
         >
           <div
-            className="h-40 sm:h-48 md:h-56 lg:h-64 w-[100%] max-w-[10000px] rounded-full translate-y-[40%]"
+            className="
+              h-[250px] sm:h-[400px] md:h-[350px]
+              w-[90%] max-w-[1200px] rounded-full 
+              translate-y-[15%]
+            "
             style={{
               background:
-                "radial-gradient(ellipse at center, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.50) 35%, rgba(0,0,0,0.28) 60%, rgba(0, 0, 0, 0) 75%)",
-              filter: "blur(3px)",
+                "radial-gradient(ellipse at center, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.55) 40%, rgba(0,0,0,0.35) 60%, rgba(0,0,0,0) 80%)",
+              filter: "blur(6px)",
             }}
           />
         </div>
 
-        {/* Actual content */}
-        <div className="relative z-10">
-          <Link
-            href="/"
-            aria-label="Go to homepage"
-            className="block relative mx-auto w-[200px] h-[200px] sm:w-[240px] sm:h-[240px] md:w-[280px] md:h-[280px]"
-          >
-            <Image
-              src="/logo-lapurity-circle.png"
-              alt="LaPurity Water Tech Inc."
-              fill
-              sizes="(max-width: 768px) 240px, 280px"
-              className="object-contain"
-              priority
-            />
-          </Link>
+        {/* Foreground text */}
+        <div
+          className="
+    relative z-10
+    mt-[140px] sm:mt-[220px] md:mt-[200px]
+    px-2 sm:px-0
+  "
+        >
 
-          <h1 className="mt-6 text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white">
             Water Softening, Filtration, &amp; Purification Solutions
             <br />
             <span className="block text-xl sm:text-2xl md:text-3xl font-semibold mt-2 text-white/90">
               Residential &ndash; Commercial &ndash; Industrial
             </span>
           </h1>
+
           <p className="mt-3 text-base sm:text-lg text-white/90">
             Proud Canadian provider of premium whole-home water treatment systems.
           </p>
