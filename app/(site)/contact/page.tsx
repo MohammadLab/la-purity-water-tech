@@ -56,23 +56,21 @@ export default function ContactPage() {
                 </ul>
 
                 <div className="mt-4 text-sm text-gray-600">
-                  Prefer email? We respond within one business day.
+                  Prefer email? We respond within two business days.
                 </div>
 
-                {/* Added Ousama Labak section under contact */}
-                <div className="mt-5 border-t pt-4">
-                  <div className="flex items-start gap-2">
-                    <User size={16} className="text-cyan-700 mt-[2px]" />
-                    <div>
-                      <p className="font-medium text-[#0D1B2A]">Ousama Labak</p>
-                      <p className="text-sm text-gray-600">Partner & Executive Manager</p>
-                      <a
-                        href="mailto:ousama@lapurity.com"
-                        className="text-sm text-cyan-700 underline mt-1 inline-block"
-                      >
-                        olabak.lapurity@gmail.com
-                      </a>
-                    </div>
+                {/* Ousama Labak info (no divider) */}
+                <div className="mt-4 flex items-start gap-2">
+                  <User size={16} className="text-cyan-700 mt-[2px]" />
+                  <div>
+                    <p className="font-medium text-[#0D1B2A]">Ousama Labak</p>
+                    <p className="text-sm text-gray-600">Partner & Executive Manager</p>
+                    <a
+                      href="mailto:olabak.lapurity@gmail.com"
+                      className="text-sm text-cyan-700 underline mt-1 inline-block"
+                    >
+                      olabak.lapurity@gmail.com
+                    </a>
                   </div>
                 </div>
               </div>
