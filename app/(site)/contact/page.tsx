@@ -44,10 +44,6 @@ export default function ContactPage() {
                     </a>
                   </li>
                   <li className="flex items-center gap-2">
-                    <Phone size={16} className="text-cyan-700" />
-                    <span>Windsor, Ontario • Mon–Fri</span>
-                  </li>
-                  <li className="flex items-center gap-2">
                     <MapPin size={16} className="text-cyan-700" />
                     <span>
                       3395 Howard Ave Unit #10
@@ -56,14 +52,15 @@ export default function ContactPage() {
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <User size={16} className="text-cyan-700 mt-[2px]" />
+                    <Phone size={16} className="text-cyan-700 mt-[2px]" />
                     <span>
                       Ousama Labak — Partner & Executive Manager
                       <br />
                       Cellphone:{" "}
                       <a href="tel:+12263407900" className="text-cyan-700 underline">
-                        +1 (226) 340-7900
+                        +1 (226) 340-7900 
                       </a>
+                      {" "}• Mon–Fri 10:00am–6:00pm
                     </span>
                   </li>
                 </ul>
