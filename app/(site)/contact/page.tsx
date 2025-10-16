@@ -20,8 +20,8 @@ export default function ContactPage() {
           <div className="text-center">
             <h1 className="text-3xl font-semibold text-[#0D1B2A]">Request a Quote</h1>
             <p className="mx-auto mt-2 max-w-2xl text-gray-700">
-              Your water deserves better. Share your water concerns for your home or business with us, 
-              and we’ll provide the right solution — with clear recommendations, fair pricing, and expert guidance. 
+              Your water deserves better. Share your water concerns for your home or business with us,
+              and we’ll provide the right solution — with clear recommendations, fair pricing, and expert guidance.
               We’ll deliver a customized plan.
             </p>
           </div>
@@ -38,10 +38,6 @@ export default function ContactPage() {
                 <h2 className="text-lg font-semibold text-[#0D1B2A]">Contact</h2>
                 <ul className="mt-2 space-y-2 text-sm text-gray-700">
                   <li className="flex items-center gap-2">
-                    <Mail size={16} className="text-cyan-700" />
-                    <a href="mailto:olabak.lapurity@gmail.com" className="underline">olabak.lapurity@gmail.com</a>
-                  </li>
-                  <li className="flex items-center gap-2">
                     <Phone size={16} className="text-cyan-700" />
                     <span>Windsor, Ontario • Mon–Fri</span>
                   </li>
@@ -53,25 +49,30 @@ export default function ContactPage() {
                       N9E 3N6 Windsor, ON, Canada
                     </span>
                   </li>
+                  <li className="flex items-start gap-2">
+                    <User size={16} className="text-cyan-700 mt-[2px]" />
+                    <span>
+                      Ousama Labak — Partner & Executive Manager
+                      <br />
+                      <a
+                        href="tel:+12263407900"
+                        className="underline text-cyan-700"
+                      >
+                        +1 (226) 340-7900
+                      </a>
+                    </span>
+                  </li>
                 </ul>
 
                 <div className="mt-4 text-sm text-gray-600">
                   Prefer email? We respond within two business days.
-                </div>
-
-                {/* Ousama Labak info (no divider) */}
-                <div className="mt-4 flex items-start gap-2">
-                  <User size={16} className="text-cyan-700 mt-[2px]" />
-                  <div>
-                    <p className="font-medium text-[#0D1B2A]">Ousama Labak</p>
-                    <p className="text-sm text-gray-600">Partner & Executive Manager</p>
-                    <a
-                      href="mailto:olabak.lapurity@gmail.com"
-                      className="text-sm text-cyan-700 underline mt-1 inline-block"
-                    >
-                      olabak.lapurity@gmail.com
-                    </a>
-                  </div>
+                  <br />
+                  <a
+                    href="mailto:olabak.lapurity@gmail.com"
+                    className="underline text-cyan-700"
+                  >
+                    olabak.lapurity@gmail.com
+                  </a>
                 </div>
               </div>
 
@@ -82,6 +83,8 @@ export default function ContactPage() {
                 </Link>.
               </div>
             </aside>
+
+
           </div>
         </Container>
       </Section>
