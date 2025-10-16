@@ -2,7 +2,7 @@
 import Section from "@/components/ui/Section";
 import Container from "@/components/ui/Container";
 import QuoteForm from "@/components/forms/QuoteForm";
-import { MapPin, Phone, Mail } from "lucide-react";
+import { MapPin, Phone, Mail, User } from "lucide-react";
 import Link from "next/link";
 
 export const metadata = {
@@ -48,21 +48,40 @@ export default function ContactPage() {
                   <li className="flex items-center gap-2">
                     <MapPin size={16} className="text-cyan-700" />
                     <span>
-  3395 Howard Ave Unit #10
-  <br />
-  N9E 3N6 Windsor, ON, Canada
-</span>
-
+                      3395 Howard Ave Unit #10
+                      <br />
+                      N9E 3N6 Windsor, ON, Canada
+                    </span>
                   </li>
                 </ul>
+
                 <div className="mt-4 text-sm text-gray-600">
                   Prefer email? We respond within one business day.
+                </div>
+
+                {/* Added Ousama Labak section under contact */}
+                <div className="mt-5 border-t pt-4">
+                  <div className="flex items-start gap-2">
+                    <User size={16} className="text-cyan-700 mt-[2px]" />
+                    <div>
+                      <p className="font-medium text-[#0D1B2A]">Ousama Labak</p>
+                      <p className="text-sm text-gray-600">Partner & Executive Manager</p>
+                      <a
+                        href="mailto:ousama@lapurity.com"
+                        className="text-sm text-cyan-700 underline mt-1 inline-block"
+                      >
+                        olabak.lapurity@gmail.com
+                      </a>
+                    </div>
+                  </div>
                 </div>
               </div>
 
               <div className="rounded-2xl border bg-white p-5 text-sm shadow-sm ring-1 ring-black/5">
                 Looking for a specific product?{" "}
-                <Link href="/products" className="text-cyan-700 underline">Browse all products</Link>.
+                <Link href="/products" className="text-cyan-700 underline">
+                  Browse all products
+                </Link>.
               </div>
             </aside>
           </div>

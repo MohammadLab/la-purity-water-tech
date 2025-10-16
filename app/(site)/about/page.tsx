@@ -41,7 +41,7 @@ export default function AboutPage() {
                 <p className="mt-3 max-w-2xl text-gray-700">
   LaPurity Water Tech is your local partner and stocking source for{" "}
   <span className="font-medium">Excalibur Water Systems</span>, a leading
-  manufacturer of premium water treatment solutions. We proudly serve all cities
+  Canadian national manufacturer of premium water treatment solutions. We proudly serve all cities
   across Southern Ontario — and even extend our expertise to the eastern regions
   of Michigan. Our team helps you solve water problems with the right solution plan,
   provides professional on-site installation and maintenance, and ensures fast, reliable
