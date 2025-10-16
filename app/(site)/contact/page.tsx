@@ -38,6 +38,12 @@ export default function ContactPage() {
                 <h2 className="text-lg font-semibold text-[#0D1B2A]">Contact</h2>
                 <ul className="mt-2 space-y-2 text-sm text-gray-700">
                   <li className="flex items-center gap-2">
+                    <Mail size={16} className="text-cyan-700" />
+                    <a href="mailto:olabak.lapurity@gmail.com" className="underline">
+                      olabak.lapurity@gmail.com
+                    </a>
+                  </li>
+                  <li className="flex items-center gap-2">
                     <Phone size={16} className="text-cyan-700" />
                     <span>Windsor, Ontario • Mon–Fri</span>
                   </li>
@@ -54,10 +60,8 @@ export default function ContactPage() {
                     <span>
                       Ousama Labak — Partner & Executive Manager
                       <br />
-                      <a
-                        href="tel:+12263407900"
-                        className="underline text-cyan-700"
-                      >
+                      Cellphone:{" "}
+                      <a href="tel:+12263407900" className="text-cyan-700 underline">
                         +1 (226) 340-7900
                       </a>
                     </span>
@@ -66,13 +70,6 @@ export default function ContactPage() {
 
                 <div className="mt-4 text-sm text-gray-600">
                   Prefer email? We respond within two business days.
-                  <br />
-                  <a
-                    href="mailto:olabak.lapurity@gmail.com"
-                    className="underline text-cyan-700"
-                  >
-                    olabak.lapurity@gmail.com
-                  </a>
                 </div>
               </div>
 
@@ -83,6 +80,7 @@ export default function ContactPage() {
                 </Link>.
               </div>
             </aside>
+
 
 
           </div>
