@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Container from "@/components/ui/Container";
+import { Mail, MapPin, Phone } from "lucide-react";
 
 const NAV = [
   { label: "Home", href: "/" },
@@ -19,7 +20,6 @@ export default function Footer() {
       "
       role="contentinfo"
     >
-      {/* content is centered, background is full-bleed */}
       <Container>
         <div className="py-10 md:py-12">
           {/* Top: contact + quick links */}
@@ -27,39 +27,48 @@ export default function Footer() {
             {/* Contact */}
             <div>
               <h3 className="text-lg font-semibold">Contact</h3>
-              <div className="mt-3 space-y-2 text-sm/6 text-white/80">
-                <p>
-                  <span className="block font-medium text-white/90">Address</span>
-                  <span>
-  3395 Howard Ave Unit #10
-  <br />
-  N9E 3N6 Windsor, ON, Canada
-              </span>
-
-                </p>
-                <p>
-                  <span className="block font-medium text-white/90">Phone</span>
-                  <a href="tel:+1-000-000-0000" className="hover:underline">
-                    (226) 340-7900
-                  </a>
-                </p>
-                <p className="text-white/80">
-                  <span className="block font-medium text-white/90">Email</span>
-                  <Link
+              <ul className="mt-3 space-y-2 text-[0.9375rem] leading-relaxed text-white/80 pr-2">
+                <li className="flex items-center gap-2">
+                  <Mail size={16} className="text-cyan-400 shrink-0" />
+                  <a
                     href="mailto:olabak.lapurity@gmail.com"
                     className="hover:text-white hover:underline break-all"
                   >
                     olabak.lapurity@gmail.com
-                  </Link>
-                </p>
-                <p>
+                  </a>
+                </li>
+                <li className="flex items-start gap-2">
+                  <MapPin size={16} className="text-cyan-400 mt-[2px] shrink-0" />
+                  <span>
+                    3395 Howard Ave Unit #10
+                    <br />
+                    N9E 3N6 Windsor, ON, Canada
+                  </span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Phone size={16} className="text-cyan-400 mt-[2px] shrink-0" />
+                  <span className="whitespace-nowrap md:whitespace-normal">
+                    Ousama Labak — Partner & Executive Manager
+                    <br />
+                    Cellphone:{" "}
+                    <a
+                      href="tel:+12263407900"
+                      className="text-cyan-400 hover:text-white underline"
+                    >
+                      +1 (226) 340-7900
+                    </a>{" "}
+                    • Mon–Fri 10:00am–6:00pm
+                  </span>
+                </li>
+              </ul>
 
-
-                </p>
-              </div>
+              <p className="mt-4 text-sm text-white/70 pr-2">
+                Prefer email? We respond within two business days.
+              </p>
             </div>
 
-            {/* Quick links (same tabs as header) */}
+
+            {/* Quick links */}
             <div className="md:col-span-2">
               <h3 className="text-lg font-semibold">Navigate</h3>
               <nav aria-label="Footer primary" className="mt-4">
